@@ -111,7 +111,10 @@ public class Mario extends Sprite {
         // time is up : too late mario dies T_T
         // the !isDead() method is used to prevent multiple invocation
         // of "die music" and jumping
-        // there is probably better ways to do that but it works for now.
+        // there is probably better ways to do that but it works for now
+        // .
+
+
         if (screen.getHud().isTimeUp() && !isDead()) {
             die();
         }
@@ -140,6 +143,7 @@ public class Mario extends Sprite {
         //get marios current state. ie. jumping, running, standing...
         currentState = getState();
 
+
         TextureRegion region;
 
         //depending on the state, get corresponding animation keyFrame.
@@ -160,6 +164,7 @@ public class Mario extends Sprite {
                 region = marioIsBig ? bigMarioRun.getKeyFrame(stateTimer, true) : marioRun.getKeyFrame(stateTimer, true);
                 break;
             case FALLING:
+
             case STANDING:
             default:
                 region = marioIsBig ? bigMarioStand : marioStand;
@@ -191,6 +196,7 @@ public class Mario extends Sprite {
     public State getState(){
         //Test to Box2D for velocity on the X and Y-Axis
         //if mario is going positive in Y-Axis he is jumping... or if he just jumped and is falling remain in jump state
+
         if(marioIsDead)
             return State.DEAD;
         else if(runGrowAnimation)
@@ -206,6 +212,7 @@ public class Mario extends Sprite {
         //if none of these return then he must be standing
         else
             return State.STANDING;
+
     }
 
     public void grow(){

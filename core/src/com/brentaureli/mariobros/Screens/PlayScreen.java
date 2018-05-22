@@ -131,6 +131,7 @@ public class PlayScreen implements Screen{
 
     public void handleInput(float dt){
         //control our player using immediate impulses
+        //sterowanie
         if(player.currentState != Mario.State.DEAD) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
                 player.jump();
@@ -139,7 +140,15 @@ public class PlayScreen implements Screen{
             if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
                 player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
-                player.fire();
+                player.jump();
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.W))
+                player.jump();
+            if (Gdx.input.isKeyPressed(Input.Keys.D) && player.b2body.getLinearVelocity().x <= 2)
+                player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
+            if (Gdx.input.isKeyPressed(Input.Keys.A) && player.b2body.getLinearVelocity().x >= -2)
+                player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+
         }
 
     }
@@ -169,6 +178,7 @@ public class PlayScreen implements Screen{
         if(player.currentState != Mario.State.DEAD) {
             gamecam.position.x = player.b2body.getPosition().x;
         }
+
 
         //update our gamecam with correct coordinates after changes
         gamecam.update();
