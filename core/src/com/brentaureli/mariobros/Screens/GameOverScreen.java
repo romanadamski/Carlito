@@ -39,12 +39,22 @@ public class GameOverScreen implements Screen {
         table.center();
         table.setFillParent(true);
 
-        Label gameOverLabel = new Label("GAME OVER", font);
-        Label playAgainLabel = new Label("Click to Play Again", font);
 
-        table.add(gameOverLabel).expandX();
+        Label katarzynaRymszaLabel = new Label("Katarzyna Rymsza", font);
+        Label jaroslawRutkowskiLabel = new Label("Jaroslaw Rutkowski", font);
+        Label bartlomiejZdybelLabel = new Label("Bartlomiej Zdybel", font);
+        Label lukaszWoznicaLabel = new Label("Lukasz Woznica", font);
+        Label romanAdamskiLabel = new Label("Roman Adamski", font);
+
+        table.add(katarzynaRymszaLabel).expandX();
         table.row();
-        table.add(playAgainLabel).expandX().padTop(10f);
+        table.add(jaroslawRutkowskiLabel).expandX().padTop(10f);
+        table.row();
+        table.add(bartlomiejZdybelLabel).expandX().padTop(20f);
+        table.row();
+        table.add(lukaszWoznicaLabel).expandX().padTop(25f);
+        table.row();
+        table.add(romanAdamskiLabel).expandX().padTop(35f);
 
         stage.addActor(table);
     }
