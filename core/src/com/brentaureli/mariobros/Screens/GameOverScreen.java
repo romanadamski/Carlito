@@ -50,11 +50,11 @@ public class GameOverScreen implements Screen {
         table.row();
         table.add(jaroslawRutkowskiLabel).expandX().padTop(10f);
         table.row();
-        table.add(bartlomiejZdybelLabel).expandX().padTop(20f);
+        table.add(bartlomiejZdybelLabel).expandX().padTop(15f);
         table.row();
-        table.add(lukaszWoznicaLabel).expandX().padTop(25f);
+        table.add(lukaszWoznicaLabel).expandX().padTop(20f);
         table.row();
-        table.add(romanAdamskiLabel).expandX().padTop(35f);
+        table.add(romanAdamskiLabel).expandX().padTop(25f);
 
         stage.addActor(table);
     }
