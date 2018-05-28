@@ -98,7 +98,6 @@ public class Goomba extends com.brentaureli.mariobros.Sprites.Enemies.Enemy
     }
 
 
-
     @Override
     public void hitOnHead(Mario mario) {
         setToDestroy = true;

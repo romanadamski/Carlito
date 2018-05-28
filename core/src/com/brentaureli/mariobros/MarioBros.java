@@ -28,7 +28,7 @@ public class MarioBros extends Game {
 	public static final short MARIO_HEAD_BIT = 512;
 	public static final short FIREBALL_BIT = 1024;
 
-	public SpriteBatch batch;
+	public static SpriteBatch batch;
 
 	/* WARNING Using AssetManager in a static way can cause issues, especially on Android.
 	Instead you may want to pass around Assetmanager to those the classes that need it.

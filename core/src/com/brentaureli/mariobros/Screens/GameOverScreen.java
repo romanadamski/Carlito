@@ -46,15 +46,15 @@ public class GameOverScreen implements Screen {
         Label lukaszWoznicaLabel = new Label("Lukasz Woznica", font);
         Label romanAdamskiLabel = new Label("Roman Adamski", font);
 
-        table.add(katarzynaRymszaLabel).expandX();
+        table.add(romanAdamskiLabel).expandX();
         table.row();
-        table.add(jaroslawRutkowskiLabel).expandX().padTop(10f);
+        table.add(katarzynaRymszaLabel).expandX().padTop(10f);
         table.row();
-        table.add(bartlomiejZdybelLabel).expandX().padTop(15f);
+        table.add(jaroslawRutkowskiLabel).expandX().padTop(15f);
         table.row();
-        table.add(lukaszWoznicaLabel).expandX().padTop(20f);
+        table.add(bartlomiejZdybelLabel).expandX().padTop(20f);
         table.row();
-        table.add(romanAdamskiLabel).expandX().padTop(25f);
+        table.add(lukaszWoznicaLabel).expandX().padTop(25f);
 
         stage.addActor(table);
     }

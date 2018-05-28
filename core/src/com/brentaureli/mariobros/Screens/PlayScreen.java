@@ -24,10 +24,13 @@ import com.brentaureli.mariobros.Sprites.Items.ItemDef;
 import com.brentaureli.mariobros.Sprites.Items.Mushroom;
 import com.brentaureli.mariobros.Sprites.Mario;
 import com.brentaureli.mariobros.Tools.B2WorldCreator;
+import com.brentaureli.mariobros.Tools.Controller;
 import com.brentaureli.mariobros.Tools.WorldContactListener;
 
 import java.util.PriorityQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import sun.rmi.runtime.Log;
 
 /**
  * Created by brentaureli on 8/14/15.
@@ -61,6 +64,7 @@ public class PlayScreen implements Screen{
     private Array<Item> items;
     private LinkedBlockingQueue<ItemDef> itemsToSpawn;
 
+    Controller controller;
 
     public PlayScreen(MarioBros game){
         atlas = new TextureAtlas("Mario_and_Enemies.pack");
@@ -102,6 +106,9 @@ public class PlayScreen implements Screen{
 
         items = new Array<Item>();
         itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
+
+        controller=new Controller();
+
     }
 
     public void spawnItem(ItemDef idef){
@@ -133,11 +140,13 @@ public class PlayScreen implements Screen{
         //control our player using immediate impulses
         //sterowanie
         if(player.currentState != Mario.State.DEAD) {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
+            if (controller.isUpPressed()){
                 player.jump();
-            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2)
+            }
+            if (controller.isRightPressed() && player.b2body.getLinearVelocity().x <= 2){
                 player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
-            if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
+            }
+            if (controller.isLeftPressed() && player.b2body.getLinearVelocity().x >= -2)
                 player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
                 player.jump();
@@ -220,7 +229,7 @@ public class PlayScreen implements Screen{
             game.setScreen(new GameOverScreen(game));
             dispose();
         }
-
+        controller.draw();
     }
 
     public boolean gameOver(){
@@ -234,6 +243,7 @@ public class PlayScreen implements Screen{
     public void resize(int width, int height) {
         //updated our game viewport
         gamePort.update(width,height);
+        controller.resize(width,height);
 
     }
 
