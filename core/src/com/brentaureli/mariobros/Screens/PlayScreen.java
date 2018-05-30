@@ -18,19 +18,13 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.brentaureli.mariobros.MarioBros;
 import com.brentaureli.mariobros.Scenes.Hud;
-import com.brentaureli.mariobros.Sprites.Enemies.Enemy;
 import com.brentaureli.mariobros.Sprites.Items.Item;
 import com.brentaureli.mariobros.Sprites.Items.ItemDef;
-import com.brentaureli.mariobros.Sprites.Items.Mushroom;
 import com.brentaureli.mariobros.Sprites.Mario;
 import com.brentaureli.mariobros.Tools.B2WorldCreator;
-import com.brentaureli.mariobros.Tools.Controller;
 import com.brentaureli.mariobros.Tools.WorldContactListener;
 
-import java.util.PriorityQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-
-import sun.rmi.runtime.Log;
 
 /**
  * Created by brentaureli on 8/14/15.
@@ -64,10 +58,9 @@ public class PlayScreen implements Screen{
     private Array<Item> items;
     private LinkedBlockingQueue<ItemDef> itemsToSpawn;
 
-    Controller controller;
 
     public PlayScreen(MarioBros game){
-        atlas = new TextureAtlas("Mario_and_Enemies.pack");
+        atlas = new TextureAtlas("KarlitoGFX.atlas");
 
         this.game = game;
         //create cam used to follow mario through cam world
@@ -82,10 +75,10 @@ public class PlayScreen implements Screen{
         //Load our map and setup our map renderer
         maploader = new TmxMapLoader();
         map = maploader.load("level1.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1  / MarioBros.PPM);
+        renderer = new OrthogonalTiledMapRenderer(map,1  / MarioBros.PPM);
 
         //initially set our gamcam to be centered correctly at the start of of map
-        gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
+        gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() /2, 0);
 
         //create our Box2D world, setting no gravity in X, -10 gravity in Y, and allow bodies to sleep
         world = new World(new Vector2(0, -10), true);
@@ -102,28 +95,16 @@ public class PlayScreen implements Screen{
         music = MarioBros.manager.get("audio/music/mario_music.ogg", Music.class);
         music.setLooping(true);
         music.setVolume(0.3f);
-        //music.play();
+        music.play();
 
         items = new Array<Item>();
         itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
-
-        controller=new Controller();
-
     }
 
     public void spawnItem(ItemDef idef){
         itemsToSpawn.add(idef);
     }
 
-
-    public void handleSpawningItems(){
-        if(!itemsToSpawn.isEmpty()){
-            ItemDef idef = itemsToSpawn.poll();
-            if(idef.type == Mushroom.class){
-                items.add(new Mushroom(this, idef.position.x, idef.position.y));
-            }
-        }
-    }
 
 
     public TextureAtlas getAtlas(){
@@ -134,30 +115,18 @@ public class PlayScreen implements Screen{
     public void show() {
 
 
+
     }
 
     public void handleInput(float dt){
         //control our player using immediate impulses
-        //sterowanie
         if(player.currentState != Mario.State.DEAD) {
-            if (controller.isUpPressed()){
+            if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
                 player.jump();
-            }
-            if (controller.isRightPressed() && player.b2body.getLinearVelocity().x <= 2){
+            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2)
                 player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
-            }
-            if (controller.isLeftPressed() && player.b2body.getLinearVelocity().x >= -2)
+            if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
                 player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
-            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
-                player.jump();
-
-            if (Gdx.input.isKeyJustPressed(Input.Keys.W))
-                player.jump();
-            if (Gdx.input.isKeyPressed(Input.Keys.D) && player.b2body.getLinearVelocity().x <= 2)
-                player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
-            if (Gdx.input.isKeyPressed(Input.Keys.A) && player.b2body.getLinearVelocity().x >= -2)
-                player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
-
         }
 
     }
@@ -165,18 +134,11 @@ public class PlayScreen implements Screen{
     public void update(float dt){
         //handle user input first
         handleInput(dt);
-        handleSpawningItems();
 
         //takes 1 step in the physics simulation(60 times per second)
         world.step(1 / 60f, 6, 2);
 
         player.update(dt);
-        for(Enemy enemy : creator.getEnemies()) {
-            enemy.update(dt);
-            if(enemy.getX() < player.getX() + 224 / MarioBros.PPM) {
-                enemy.b2body.setActive(true);
-            }
-        }
 
         for(Item item : items)
             item.update(dt);
@@ -187,7 +149,6 @@ public class PlayScreen implements Screen{
         if(player.currentState != Mario.State.DEAD) {
             gamecam.position.x = player.b2body.getPosition().x;
         }
-
 
         //update our gamecam with correct coordinates after changes
         gamecam.update();
@@ -215,8 +176,6 @@ public class PlayScreen implements Screen{
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         player.draw(game.batch);
-        for (Enemy enemy : creator.getEnemies())
-            enemy.draw(game.batch);
         for (Item item : items)
             item.draw(game.batch);
         game.batch.end();
@@ -229,7 +188,7 @@ public class PlayScreen implements Screen{
             game.setScreen(new GameOverScreen(game));
             dispose();
         }
-        controller.draw();
+
     }
 
     public boolean gameOver(){
@@ -243,7 +202,6 @@ public class PlayScreen implements Screen{
     public void resize(int width, int height) {
         //updated our game viewport
         gamePort.update(width,height);
-        controller.resize(width,height);
 
     }
 
