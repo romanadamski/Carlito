@@ -72,7 +72,7 @@ public class Mario extends Sprite {
         defineMario();
 
         //set initial values for marios location, width and height. And initial frame as marioStand.
-        setBounds(0, 0, 16 / MarioBros.PPM, 42 / MarioBros.PPM);
+        setBounds(0, 0, 16 / MarioBros.PPM, 45 / MarioBros.PPM);
         setRegion(marioStand);
 
 
@@ -95,8 +95,7 @@ public class Mario extends Sprite {
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         //update sprite with the correct frame depending on marios current action
         setRegion(getFrame(dt));
-        if(timeToRedefineMario)
-            redefineMario();
+
 
     }
 
@@ -196,41 +195,6 @@ public class Mario extends Sprite {
     }
 
 
-    public void redefineMario(){
-        Vector2 position = b2body.getPosition();
-        world.destroyBody(b2body);
-
-        BodyDef bdef = new BodyDef();
-        bdef.position.set(position);
-        bdef.type = BodyDef.BodyType.DynamicBody;
-        b2body = world.createBody(bdef);
-
-        FixtureDef fdef = new FixtureDef();
-        CircleShape shape = new CircleShape();
-        shape.setRadius(6 / MarioBros.PPM);
-        fdef.filter.categoryBits = MarioBros.MARIO_BIT;
-        fdef.filter.maskBits = MarioBros.GROUND_BIT |
-                MarioBros.COIN_BIT |
-                MarioBros.BRICK_BIT |
-                MarioBros.ENEMY_BIT |
-                MarioBros.OBJECT_BIT |
-                MarioBros.ENEMY_HEAD_BIT |
-                MarioBros.ITEM_BIT;
-
-        fdef.shape = shape;
-        b2body.createFixture(fdef).setUserData(this);
-
-        EdgeShape head = new EdgeShape();
-        head.set(new Vector2(-2 / MarioBros.PPM, 6 / MarioBros.PPM), new Vector2(2 / MarioBros.PPM, 6 / MarioBros.PPM));
-        fdef.filter.categoryBits = MarioBros.MARIO_HEAD_BIT;
-        fdef.shape = head;
-        fdef.isSensor = true;
-
-        b2body.createFixture(fdef).setUserData(this);
-
-        timeToRedefineMario = false;
-
-    }
 
 
     public void defineMario(){

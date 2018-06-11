@@ -22,6 +22,7 @@ import com.brentaureli.mariobros.Sprites.Items.Item;
 import com.brentaureli.mariobros.Sprites.Items.ItemDef;
 import com.brentaureli.mariobros.Sprites.Mario;
 import com.brentaureli.mariobros.Tools.B2WorldCreator;
+import com.brentaureli.mariobros.Tools.Controller;
 import com.brentaureli.mariobros.Tools.WorldContactListener;
 
 import java.util.concurrent.LinkedBlockingQueue;
@@ -58,6 +59,7 @@ public class PlayScreen implements Screen{
     private Array<Item> items;
     private LinkedBlockingQueue<ItemDef> itemsToSpawn;
 
+    Controller controller;
 
     public PlayScreen(MarioBros game){
         atlas = new TextureAtlas("KarlitoGFX.atlas");
@@ -99,6 +101,8 @@ public class PlayScreen implements Screen{
 
         items = new Array<Item>();
         itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
+
+        controller= new Controller();
     }
 
     public void spawnItem(ItemDef idef){
@@ -121,12 +125,29 @@ public class PlayScreen implements Screen{
     public void handleInput(float dt){
         //control our player using immediate impulses
         if(player.currentState != Mario.State.DEAD) {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
+            if (Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+
                 player.jump();
-            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2)
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2){
+                System.out.println(player.b2body.getPosition().x);
                 player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
+
+            }
             if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
                 player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+
+            if (controller.isUpPressed()){
+                player.jump();
+            }
+            if (controller.isRightPressed() && player.b2body.getLinearVelocity().x <= 2){
+                System.out.println(player.b2body.getPosition().x);
+                player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
+            }
+            if (controller.isLeftPressed() && player.b2body.getLinearVelocity().x >= -2)
+                player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
+                player.jump();
         }
 
     }
@@ -188,6 +209,8 @@ public class PlayScreen implements Screen{
             game.setScreen(new GameOverScreen(game));
             dispose();
         }
+        controller.draw();
+
 
     }
 
@@ -203,6 +226,7 @@ public class PlayScreen implements Screen{
         //updated our game viewport
         gamePort.update(width,height);
 
+        controller.resize(width,height);
     }
 
     public TiledMap getMap(){
