@@ -77,7 +77,6 @@ public class MainActivity extends Activity {
                     Intent intent = new Intent(context,AndroidLauncher.class);
                     startActivity(intent);
                 }
-
             }
         });
         bMario.setOnClickListener(new View.OnClickListener() {
