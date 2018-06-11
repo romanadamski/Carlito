@@ -14,7 +14,9 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/GdxTheme" >
-        <activity android:name="com.brentaureli.mariobros.Menu.MainActivity">
+        <activity
+            android:name="com.brentaureli.mariobros.Menu.MainActivity"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -26,9 +28,9 @@
             android:screenOrientation="landscape"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
         </activity>
-        <activity android:name="com.brentaureli.mariobros.Menu.ListaUrzadzen">
-        </activity>
-        <activity android:name="com.brentaureli.mariobros.Menu.Messenger">
+        <activity
+            android:name="com.brentaureli.mariobros.Menu.ListaUrzadzen"
+            android:screenOrientation="landscape">
         </activity>
     </application>
 
