@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.brentaureli.mariobros.android.AndroidLauncher;
 import com.brentaureli.mariobros.android.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +37,7 @@ public class MainActivity extends Activity {
     Button bDolaczDoGry;
     Button bUtworzNowaGre;
     Button bMario;
-    final ServerBluetooth serwer=new ServerBluetooth();
+    ServerBluetooth serwer;
     private TextView klientserwer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,16 +69,33 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 createPlainAlertDialog().show();
                 //startuje wątek z serwerem
+                serwer=new ServerBluetooth();
                 if(!serwer.isAlive()){
                     serwer.start();
                 }
                 //jeśli połączono-startuje aktywnosc z gra, dopoki nie-wyswietla sie dialog z laczeniem i anuluj
-                if (serwer.polaczono.equals("Połączono")){
-                    Context context;
-                    context = getApplicationContext();
-                    Intent intent = new Intent(context,AndroidLauncher.class);
-                    startActivity(intent);
+                class AsyncSerwerOdbior extends AsyncTask<String,Void, Void> {
+                    @Override
+                    protected Void doInBackground(String... strings) {
+                        Intent intent;
+                        while(true){
+                            if (serwer.polaczono.equals("Połączono")){
+                                Context context;
+                                context = getApplicationContext();
+                                intent= new Intent(context,AndroidLauncher.class);
+                                break;
+                            }
+                        }
+                        intent.putExtra("skin", "KARLITO");
+                        String serwerJson = new Gson().toJson(serwer);
+                        intent.putExtra("serwer", serwerJson);
+                        startActivity(intent);
+                        return null;
+
+                    }
                 }
+                AsyncSerwerOdbior aso = new AsyncSerwerOdbior();
+                aso.execute();
             }
         });
         bMario.setOnClickListener(new View.OnClickListener() {

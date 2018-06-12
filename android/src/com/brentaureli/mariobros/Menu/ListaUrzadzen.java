@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.brentaureli.mariobros.android.AndroidLauncher;
 import com.brentaureli.mariobros.android.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,12 +50,29 @@ public class ListaUrzadzen extends Activity{
                 final ClientBluetooth klient=new ClientBluetooth(server);
                 klient.start();
                 //jeśli połączono-startuje aktywnosc z gra
-                if (klient.polaczono.equals("Połączono")) {
-                    Context context;
-                    context = getApplicationContext();
-                    Intent intent = new Intent(context,AndroidLauncher.class);
-                    startActivity(intent);
+                //na wontku
+
+                class AsyncSerwerOdbior extends AsyncTask<String,Void, Void> {
+                    @Override
+                    protected Void doInBackground(String... strings) {
+                        Intent intent;
+                        while(true){
+                            if (klient.polaczono.equals("Połączono")){
+                                Context context;
+                                context = getApplicationContext();
+                                intent= new Intent(context,AndroidLauncher.class);
+                                break;
+                            }
+                        }
+                        intent.putExtra("skin", "KARLITO2");
+                        String klientJson = new Gson().toJson(klient);
+                        intent.putExtra("klient", klientJson);
+                        startActivity(intent);
+                        return null;
+                    }
                 }
+                AsyncSerwerOdbior aso = new AsyncSerwerOdbior();
+                aso.execute();
             }
         });
     }

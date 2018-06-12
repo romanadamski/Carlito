@@ -60,8 +60,12 @@ public class PlayScreen implements Screen{
     private LinkedBlockingQueue<ItemDef> itemsToSpawn;
 
     Controller controller;
+    public PlayScreen(String skin){
 
-    public PlayScreen(MarioBros game){
+    }
+    String skin;
+
+    public PlayScreen(MarioBros game, String skin){
         atlas = new TextureAtlas("KarlitoGFX.atlas");
 
         this.game = game;
@@ -90,7 +94,7 @@ public class PlayScreen implements Screen{
         creator = new B2WorldCreator(this);
 
         //create mario in our game world
-        player = new Mario(this);
+        player = new Mario(this, skin);
 
         world.setContactListener(new WorldContactListener());
 
@@ -103,6 +107,8 @@ public class PlayScreen implements Screen{
         itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
 
         controller= new Controller();
+
+        this.skin=skin;
     }
 
     public void spawnItem(ItemDef idef){
@@ -117,8 +123,6 @@ public class PlayScreen implements Screen{
 
     @Override
     public void show() {
-
-
 
     }
 
@@ -149,7 +153,6 @@ public class PlayScreen implements Screen{
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
                 player.jump();
         }
-
     }
 
     public void update(float dt){

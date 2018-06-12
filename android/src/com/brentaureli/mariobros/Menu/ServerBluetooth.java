@@ -38,18 +38,18 @@ public class ServerBluetooth extends Thread {
         BluetoothSocket Socket=null;
         while(true) {
             try {
+                Log.d("przed accept","socket");
                 Socket = SerwerSocket.accept();
+                Log.d("accept","socket");
                 if(Socket.isConnected()){
                     out = new PrintWriter(Socket.getOutputStream(), true);
-                    Log.d("Socket","Nie jest nullem");
                     polaczono="Połączono";
                     Log.d("Info","Polaczono sie ze mna");
                     break;
                 }
-            } catch (IOException e) {
-
-            }
+            } catch (IOException e) {}
         }
+        
         while(true){
             try{
                 BufferedReader in=new BufferedReader(new InputStreamReader(Socket.getInputStream()));

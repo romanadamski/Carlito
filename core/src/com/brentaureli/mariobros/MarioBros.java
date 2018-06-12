@@ -13,7 +13,6 @@ public class MarioBros extends Game {
 	public static final int V_WIDTH = 400;
 	public static final int V_HEIGHT = 208;
 	public static final float PPM = 100;
-
 	//Box2D Collision Bits
 	public static final short NOTHING_BIT = 0;
 	public static final short GROUND_BIT = 1;
@@ -33,7 +32,11 @@ public class MarioBros extends Game {
 	Instead you may want to pass around Assetmanager to those the classes that need it.
 	We will use it in the static context to save time for now. */
 	public static AssetManager manager;
-	
+
+	public MarioBros(String skin){
+		this.skin=skin;
+	}
+	String skin;
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -50,9 +53,8 @@ public class MarioBros extends Game {
 
 		manager.finishLoading();
 
-		setScreen(new PlayScreen(this));
+		setScreen(new PlayScreen(this, skin));
 	}
-
 
 	@Override
 	public void dispose() {

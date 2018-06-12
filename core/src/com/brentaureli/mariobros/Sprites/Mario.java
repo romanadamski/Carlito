@@ -43,7 +43,8 @@ public class Mario extends Sprite {
     private boolean marioIsDead;
     private PlayScreen screen;
 
-    public Mario(PlayScreen screen){
+    private String skin="KARLITO";
+    public Mario(PlayScreen screen, String skin){
         //initialize default values
         this.screen = screen;
         this.world = screen.getWorld();
@@ -56,17 +57,17 @@ public class Mario extends Sprite {
 
         //get run animation frames and add them to marioRun Animation
         for(int i = 1; i < 4; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("KARLITO"), i * 16, 0, 16, 36));
+            frames.add(new TextureRegion(screen.getAtlas().findRegion(skin), i * 16, 0, 16, 36));
         marioRun = new Animation(0.1f, frames);
 
         frames.clear();
 
         //get jump animation frames and add them to marioJump Animation
-        marioJump = new TextureRegion(screen.getAtlas().findRegion("KARLITO"), 80, 0, 16, 36);
+        marioJump = new TextureRegion(screen.getAtlas().findRegion(skin), 80, 0, 16, 36);
         //create texture region for mario standing
-        marioStand = new TextureRegion(screen.getAtlas().findRegion("KARLITO"), 0, 0, 16, 36);
+        marioStand = new TextureRegion(screen.getAtlas().findRegion(skin), 0, 0, 16, 36);
         //create dead mario texture region
-        marioDead = new TextureRegion(screen.getAtlas().findRegion("KARLITO"), 96, 0, 16, 36);
+        marioDead = new TextureRegion(screen.getAtlas().findRegion(skin), 96, 0, 16, 36);
 
         //define mario in Box2d
         defineMario();
