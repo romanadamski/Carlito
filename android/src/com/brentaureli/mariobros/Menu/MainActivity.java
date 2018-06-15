@@ -87,8 +87,6 @@ public class MainActivity extends Activity {
                             }
                         }
                         intent.putExtra("skin", "KARLITO");
-                        String serwerJson = new Gson().toJson(serwer);
-                        intent.putExtra("serwer", serwerJson);
                         startActivity(intent);
                         return null;
 

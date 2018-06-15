@@ -65,8 +65,6 @@ public class ListaUrzadzen extends Activity{
                             }
                         }
                         intent.putExtra("skin", "KARLITO2");
-                        String klientJson = new Gson().toJson(klient);
-                        intent.putExtra("klient", klientJson);
                         startActivity(intent);
                         return null;
                     }
