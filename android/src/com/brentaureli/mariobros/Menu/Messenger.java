@@ -69,7 +69,7 @@ public class Messenger extends Activity {
                 @Override
                 public void onClick(View view) {
                     pom=wiadomosc.getText().toString();
-                    klient.write(pom);
+                    //klient.write(pom);
                     klient.wiadWych=pom;
                     wych.setText(pom);
                     wiadomosc.setText("");
@@ -86,7 +86,7 @@ public class Messenger extends Activity {
                 @Override
                 public void onClick(View view){
                     pom=wiadomosc.getText().toString();
-                    serwer.write(pom);
+                    //serwer.write(pom);
                     serwer.wiadWych=pom;
                     wych.setText(pom);
                     wiadomosc.setText("");

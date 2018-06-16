@@ -53,8 +53,8 @@ public class ClientBluetooth extends Thread {
             }
         }
     }
-    public void write(String wiadomosc){
+    public void write(float wiadomosc){
         out.println(wiadomosc);
-        Log.d("Write klient",wiadomosc);
+        Log.d("Write klient",""+wiadomosc);
     }
 }

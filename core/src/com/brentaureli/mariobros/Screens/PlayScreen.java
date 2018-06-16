@@ -23,9 +23,11 @@ import com.brentaureli.mariobros.Sprites.Items.ItemDef;
 import com.brentaureli.mariobros.Sprites.Mario;
 import com.brentaureli.mariobros.Tools.B2WorldCreator;
 import com.brentaureli.mariobros.Tools.Controller;
+import com.brentaureli.mariobros.Tools.MyCallbackListener;
 import com.brentaureli.mariobros.Tools.WorldContactListener;
 
 import java.util.concurrent.LinkedBlockingQueue;
+
 
 /**
  * Created by brentaureli on 8/14/15.
@@ -64,7 +66,6 @@ public class PlayScreen implements Screen{
 
     }
     String skin;
-
     public PlayScreen(MarioBros game, String skin){
         atlas = new TextureAtlas("KarlitoGFX.atlas");
 
@@ -115,8 +116,6 @@ public class PlayScreen implements Screen{
         itemsToSpawn.add(idef);
     }
 
-
-
     public TextureAtlas getAtlas(){
         return atlas;
     }
@@ -134,9 +133,7 @@ public class PlayScreen implements Screen{
                 player.jump();
             }
             if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2){
-                System.out.println(player.b2body.getPosition().x);
                 player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
-
             }
             if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
                 player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
@@ -144,8 +141,8 @@ public class PlayScreen implements Screen{
             if (controller.isUpPressed()){
                 player.jump();
             }
+
             if (controller.isRightPressed() && player.b2body.getLinearVelocity().x <= 2){
-                System.out.println(player.b2body.getPosition().x);
                 player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
             }
             if (controller.isLeftPressed() && player.b2body.getLinearVelocity().x >= -2)
@@ -178,6 +175,7 @@ public class PlayScreen implements Screen{
         gamecam.update();
         //tell our renderer to draw only what our camera can see in our game world.
         renderer.setView(gamecam);
+        MyCallbackListener.sendWsp =player.b2body.getPosition().x;
 
     }
 

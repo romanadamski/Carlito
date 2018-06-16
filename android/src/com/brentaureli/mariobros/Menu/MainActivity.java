@@ -4,33 +4,17 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.Pair;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
-import com.badlogic.gdx.ApplicationAdapter;
+
+import com.brentaureli.mariobros.Tools.MyCallbackListener;
 import com.brentaureli.mariobros.android.AndroidLauncher;
 import com.brentaureli.mariobros.android.R;
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.Vector;
 
 public class MainActivity extends Activity {
     Button bWlaczBluetooth;
@@ -38,7 +22,6 @@ public class MainActivity extends Activity {
     Button bUtworzNowaGre;
     Button bMario;
     ServerBluetooth serwer;
-    private TextView klientserwer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +30,6 @@ public class MainActivity extends Activity {
         bDolaczDoGry=(Button) findViewById(R.id.bDolaczDoGry);
         bUtworzNowaGre=(Button) findViewById(R.id.bUtworzNowaGre);
         bMario=(Button) findViewById(R.id.bMario);
-        klientserwer=(TextView) findViewById(R.id.klientserwer);
         bWlaczBluetooth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,12 +70,19 @@ public class MainActivity extends Activity {
                         }
                         intent.putExtra("skin", "KARLITO");
                         startActivity(intent);
+                        //wysylanie współrzędnych przez serwer
+                        while(true){
+                            serwer.write(MyCallbackListener.sendWsp);
+                            if (!serwer.polaczono.equals("Połączono")){
+                                break;
+                            }
+                        }
                         return null;
-
                     }
                 }
                 AsyncSerwerOdbior aso = new AsyncSerwerOdbior();
                 aso.execute();
+
             }
         });
         bMario.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +92,7 @@ public class MainActivity extends Activity {
                 context = getApplicationContext();
                 Intent intent = new Intent(context,AndroidLauncher.class);
                 startActivity(intent);
+
             }
         });
         BluetoothAdapter ba =BluetoothAdapter.getDefaultAdapter();
