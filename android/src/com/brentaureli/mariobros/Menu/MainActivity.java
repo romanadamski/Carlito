@@ -72,6 +72,7 @@ public class MainActivity extends Activity {
                         startActivity(intent);
                         //wysylanie współrzędnych przez serwer
                         while(true){
+                            System.out.println(MyCallbackListener.sendWsp);
                             serwer.write(MyCallbackListener.sendWsp);
                             if (!serwer.polaczono.equals("Połączono")){
                                 break;

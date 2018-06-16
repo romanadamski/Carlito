@@ -1,0 +1,14 @@
+package com.brentaureli.mariobros.Tools;
+
+import com.badlogic.gdx.ApplicationListener;
+
+import javax.xml.crypto.Data;
+
+/**
+ * Created by romek95a on 15.06.2018.
+ */
+
+public class MyCallbackListener {
+    public static float sendWsp =0;
+    public static float receiveWsp =0;
+}
