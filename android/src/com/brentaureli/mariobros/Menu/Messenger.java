@@ -55,12 +55,12 @@ public class Messenger extends Activity {
             final ClientBluetooth klient=new ClientBluetooth(server);
             klient.start();
             //odbieranie będąc klientem
-            odbior.setText(klient.wiadPrzych);
+            //odbior.setText(klient.wiadPrzych);
             polacz.setText(klient.polaczono);
             odbierz.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    odbior.setText(klient.wiadPrzych);
+                    //odbior.setText(klient.wiadPrzych);
                     polacz.setText(klient.polaczono);
                 }
             });
@@ -70,7 +70,7 @@ public class Messenger extends Activity {
                 public void onClick(View view) {
                     pom=wiadomosc.getText().toString();
                     //klient.write(pom);
-                    klient.wiadWych=pom;
+                    //klient.wiadWych=pom;
                     wych.setText(pom);
                     wiadomosc.setText("");
                 }

@@ -17,8 +17,8 @@ import java.util.UUID;
 public class ClientBluetooth extends Thread {
     private BluetoothSocket Socket;
     private BluetoothDevice Device;
-    String wiadWych="Nic nie wysłano";
-    String wiadPrzych="Nic nie przysłano";
+    String wiadWych="0";
+    String wiadPrzych="0";
     String polaczono="Nie połączono";
     PrintWriter out;
     public ClientBluetooth(BluetoothDevice device){
@@ -53,7 +53,7 @@ public class ClientBluetooth extends Thread {
             }
         }
     }
-    public void write(float wiadomosc){
+    public void write(String wiadomosc){
         out.println(wiadomosc);
         Log.d("Write klient",""+wiadomosc);
     }

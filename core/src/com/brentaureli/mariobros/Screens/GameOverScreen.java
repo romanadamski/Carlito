@@ -41,21 +41,35 @@ public class GameOverScreen implements Screen {
         table.setFillParent(true);
 
 
+        Label win = new Label("Wygrales!", font);
+        Label lose = new Label("Ruchasz male dzieci!", font);
         Label katarzynaRymszaLabel = new Label("Katarzyna Rymsza", font);
         Label jaroslawRutkowskiLabel = new Label("Jaroslaw Rutkowski", font);
         Label bartlomiejZdybelLabel = new Label("Bartlomiej Zdybel", font);
         Label lukaszWoznicaLabel = new Label("Lukasz Woznica", font);
         Label romanAdamskiLabel = new Label("Roman Adamski", font);
 
-        table.add(romanAdamskiLabel).expandX();
+        if(MyCallbackListener.result==1){
+            table.add(win).expandX().padTop(10f);
+            table.row();
+        }
+        else if(MyCallbackListener.result==2){
+            table.add(lose).expandX().padTop(10f);
+            table.row();
+        }
+        else if(MyCallbackListener.result==0){
+            table.add(lose).expandX().padTop(10f);
+            table.row();
+        }
+        table.add(romanAdamskiLabel).expandX().padTop(10f);
         table.row();
         table.add(katarzynaRymszaLabel).expandX().padTop(10f);
         table.row();
-        table.add(jaroslawRutkowskiLabel).expandX().padTop(15f);
+        table.add(jaroslawRutkowskiLabel).expandX().padTop(10f);
         table.row();
-        table.add(bartlomiejZdybelLabel).expandX().padTop(20f);
+        table.add(bartlomiejZdybelLabel).expandX().padTop(10f);
         table.row();
-        table.add(lukaszWoznicaLabel).expandX().padTop(25f);
+        table.add(lukaszWoznicaLabel).expandX().padTop(10f);
 
         stage.addActor(table);
     }

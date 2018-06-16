@@ -17,7 +17,9 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.brentaureli.mariobros.MarioBros;
+import com.brentaureli.mariobros.Scenes.Hud;
 import com.brentaureli.mariobros.Screens.PlayScreen;
+import com.brentaureli.mariobros.Tools.MyCallbackListener;
 
 
 /**
@@ -42,6 +44,8 @@ public class Mario extends Sprite {
     private boolean timeToRedefineMario;
     private boolean marioIsDead;
     private PlayScreen screen;
+    public boolean isFree=false;
+    public boolean IfEnemyIsFree=false;
 
     private String skin="KARLITO";
     public Mario(PlayScreen screen, String skin){
@@ -81,14 +85,16 @@ public class Mario extends Sprite {
 
     public void update(float dt){
 
-        // time is up : too late mario dies T_T
-        // the !isDead() method is used to prevent multiple invocation
-        // of "die music" and jumping
-        // there is probably better ways to do that but it works for now.
+       // System.out.println(b2body.getPosition().x);
+        Float pom=(float)35.288307;
+        Hud.addScore((MyCallbackListener.receiveWsp/pom)*100);
         if (screen.getHud().isTimeUp() && !isDead()) {
             die();
         }
-
+        if(b2body.getPosition().y<0)
+        {
+            die();
+        }
         //update our sprite to correspond with the position of our Box2D body
         if(marioIsBig)
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2 - 6 / MarioBros.PPM);
@@ -145,19 +151,18 @@ public class Mario extends Sprite {
     }
 
     public State getState(){
-        //Test to Box2D for velocity on the X and Y-Axis
-        //if mario is going positive in Y-Axis he is jumping... or if he just jumped and is falling remain in jump state
+
+
         if(marioIsDead)
             return State.DEAD;
         else if((b2body.getLinearVelocity().y > 0 && currentState == State.JUMPING) || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING))
             return State.JUMPING;
-        //if negative in Y-Axis mario is falling
         else if(b2body.getLinearVelocity().y < 0)
             return State.FALLING;
-        //if mario is positive or negative in the X axis he is running
+
         else if(b2body.getLinearVelocity().x != 0)
             return State.RUNNING;
-        //if none of these return then he must be standing
+
         else
             return State.STANDING;
     }
@@ -166,7 +171,7 @@ public class Mario extends Sprite {
 
         if (!isDead()) {
 
-            MarioBros.manager.get("audio/music/mario_music.ogg", Music.class).stop();
+            MarioBros.manager.get("audio/music/9997.ogg", Music.class).stop();
             MarioBros.manager.get("audio/sounds/mariodie.wav", Sound.class).play();
             marioIsDead = true;
             Filter filter = new Filter();

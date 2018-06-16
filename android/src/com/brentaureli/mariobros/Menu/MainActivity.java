@@ -70,10 +70,15 @@ public class MainActivity extends Activity {
                         }
                         intent.putExtra("skin", "KARLITO");
                         startActivity(intent);
-                        //wysylanie współrzędnych przez serwer
+                        //polaczenie:
                         while(true){
-                            System.out.println(MyCallbackListener.sendWsp);
-                            serwer.write(MyCallbackListener.sendWsp);
+                            //serwer wysyla
+                            serwer.write(Float.toString(MyCallbackListener.sendWsp));
+                            //serwer odbiera
+                            MyCallbackListener.receiveWsp=Float.parseFloat(serwer.wiadPrzych);
+                            System.out.println("serwer odbiera: "+MyCallbackListener.receiveWsp);
+                            //sleep zeby sie nie zacinalo
+
                             if (!serwer.polaczono.equals("Połączono")){
                                 break;
                             }

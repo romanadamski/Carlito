@@ -11,4 +11,5 @@ import javax.xml.crypto.Data;
 public class MyCallbackListener {
     public static float sendWsp =0;
     public static float receiveWsp =0;
+    public static int result=0;
 }

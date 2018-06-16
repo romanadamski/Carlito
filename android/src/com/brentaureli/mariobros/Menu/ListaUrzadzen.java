@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.brentaureli.mariobros.Tools.MyCallbackListener;
 import com.brentaureli.mariobros.android.AndroidLauncher;
 import com.brentaureli.mariobros.android.R;
 import com.google.gson.Gson;
@@ -52,7 +53,7 @@ public class ListaUrzadzen extends Activity{
                 //jeśli połączono-startuje aktywnosc z gra
                 //na wontku
 
-                class AsyncSerwerOdbior extends AsyncTask<String,Void, Void> {
+                class AsyncKlientOdbior extends AsyncTask<String,Void, Void> {
                     @Override
                     protected Void doInBackground(String... strings) {
                         Intent intent;
@@ -66,11 +67,24 @@ public class ListaUrzadzen extends Activity{
                         }
                         intent.putExtra("skin", "KARLITO2");
                         startActivity(intent);
+                        //polaczenie:
+                        while(true){
+                            //klient wysyla
+                            klient.write(Float.toString(MyCallbackListener.sendWsp));
+                            //klient odbiera
+                            MyCallbackListener.receiveWsp=Float.parseFloat(klient.wiadPrzych);
+                            System.out.println("klient odbiera: "+MyCallbackListener.receiveWsp);
+                            //sleep zeby sie nie zacinalo
+
+                            if (!klient.polaczono.equals("Połączono")){
+                                break;
+                            }
+                        }
                         return null;
                     }
                 }
-                AsyncSerwerOdbior aso = new AsyncSerwerOdbior();
-                aso.execute();
+                AsyncKlientOdbior ako = new AsyncKlientOdbior();
+                ako.execute();
             }
         });
     }

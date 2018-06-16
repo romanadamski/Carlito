@@ -77,7 +77,7 @@ public class PlayScreen implements Screen{
         gamePort = new FitViewport(MarioBros.V_WIDTH / MarioBros.PPM, MarioBros.V_HEIGHT / MarioBros.PPM, gamecam);
 
         //create our game HUD for scores/timers/level info
-        hud = new Hud(game.batch);
+
 
         //Load our map and setup our map renderer
         maploader = new TmxMapLoader();
@@ -97,11 +97,13 @@ public class PlayScreen implements Screen{
         //create mario in our game world
         player = new Mario(this, skin);
 
+        hud = new Hud(game.batch, player);
+
         world.setContactListener(new WorldContactListener());
 
-        music = MarioBros.manager.get("audio/music/mario_music.ogg", Music.class);
+        music = MarioBros.manager.get("audio/music/9997.ogg", Music.class);
         music.setLooping(true);
-        music.setVolume(0.3f);
+        music.setVolume(0.4f);
         music.play();
 
         items = new Array<Item>();
@@ -147,6 +149,7 @@ public class PlayScreen implements Screen{
             }
             if (controller.isLeftPressed() && player.b2body.getLinearVelocity().x >= -2)
                 player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
                 player.jump();
         }
@@ -175,8 +178,8 @@ public class PlayScreen implements Screen{
         gamecam.update();
         //tell our renderer to draw only what our camera can see in our game world.
         renderer.setView(gamecam);
-        MyCallbackListener.sendWsp =player.b2body.getPosition().x;
 
+        MyCallbackListener.sendWsp =player.b2body.getPosition().x;
     }
 
 
@@ -216,7 +219,22 @@ public class PlayScreen implements Screen{
     }
 
     public boolean gameOver(){
-        if(player.currentState == Mario.State.DEAD && player.getStateTimer() > 3){
+        if(player.currentState == Mario.State.DEAD && player.getStateTimer() > 3 ){
+            MyCallbackListener.sendWsp=37;
+            MyCallbackListener.result=2;
+            return true;
+        }
+        else if(MyCallbackListener.receiveWsp==36){
+            MyCallbackListener.result=2;
+            return true;
+        }
+        else if(player.isFree){
+            MyCallbackListener.sendWsp=36;
+            MyCallbackListener.result=1;
+            return true;
+        }
+        else if(MyCallbackListener.receiveWsp==37){
+            MyCallbackListener.result=1;
             return true;
         }
         return false;
