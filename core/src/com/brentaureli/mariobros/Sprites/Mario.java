@@ -79,7 +79,6 @@ public class Mario extends Sprite {
         setBounds(0, 0, 16 / MarioBros.PPM, 45 / MarioBros.PPM);
         setRegion(marioStand);
 
-
     }
 
     public void update(float dt){
@@ -89,7 +88,12 @@ public class Mario extends Sprite {
         if(pom>100){
             pom=(float)100;
         }
+        Float pom2=(b2body.getPosition().x/(float)34.4843330383)*100;
+        if(pom2>100){
+            pom2=(float)100;
+        }
         Hud.addScore(pom);
+        Hud.addScore2(pom2);
 
         if (screen.getHud().isTimeUp() && !isDead()) {
             die();

@@ -34,6 +34,8 @@ public class Hud implements Disposable{
     private static Label scoreLabel;
     private Label timeLabel;
     private Label marioLabel;
+    private static Label scoreLabel2;
+    private Label marioLabel2;
 
     public Hud(SpriteBatch sb, Mario mario){
         worldTimer = 100;
@@ -55,14 +57,18 @@ public class Hud implements Disposable{
         countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.YELLOW));
         scoreLabel =new Label(String.format("%f", score), new Label.LabelStyle(new BitmapFont(), Color.YELLOW));
         timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        marioLabel = new Label("PROCENT GRY", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        marioLabel = new Label("ENEMY", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        scoreLabel2 =new Label(String.format("%f", score), new Label.LabelStyle(new BitmapFont(), Color.YELLOW));
+        marioLabel2 = new Label("YOU", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         //add our labels to our table, padding the top, and giving them all equal width with expandX
         table.add(marioLabel).expandX();
+        table.add(marioLabel2).expandX();
         table.add(timeLabel).expandX();
         //add a second row to our table
         table.row();
         table.add(scoreLabel).expandX();
+        table.add(scoreLabel2).expandX();
         table.add(countdownLabel).expandX();
         //add our table to the stage
         stage.addActor(table);
@@ -86,6 +92,11 @@ public class Hud implements Disposable{
 
         scoreLabel.setText(String.format("%.0f", value)+"%");
        // System.out.println("ELO"+value);
+    }
+    public static void addScore2(float value){
+
+        scoreLabel2.setText(String.format("%.0f", value)+"%");
+        // System.out.println("ELO"+value);
     }
 
     @Override
