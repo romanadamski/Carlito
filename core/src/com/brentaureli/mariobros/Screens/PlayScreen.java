@@ -21,10 +21,10 @@ import com.brentaureli.mariobros.Scenes.Hud;
 import com.brentaureli.mariobros.Sprites.Items.Item;
 import com.brentaureli.mariobros.Sprites.Items.ItemDef;
 import com.brentaureli.mariobros.Sprites.Mario;
-import com.brentaureli.mariobros.Screens.Tools.B2WorldCreator;
-import com.brentaureli.mariobros.Screens.Tools.Controller;
-import com.brentaureli.mariobros.Screens.Tools.MyCallbackListener;
-import com.brentaureli.mariobros.Screens.Tools.WorldContactListener;
+import com.brentaureli.mariobros.Tools.B2WorldCreator;
+import com.brentaureli.mariobros.Tools.Controller;
+import com.brentaureli.mariobros.Tools.MyCallbackListener;
+import com.brentaureli.mariobros.Tools.WorldContactListener;
 
 import java.util.concurrent.LinkedBlockingQueue;
 

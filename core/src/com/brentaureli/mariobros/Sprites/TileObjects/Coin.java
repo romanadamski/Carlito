@@ -30,7 +30,6 @@ public class Coin extends InteractiveTileObject {
     @Override
     public void onHeadHit(Mario mario) {
 
-        System.out.println("NOELO");
         mario.isFree=true;
 
     }

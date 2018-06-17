@@ -2,11 +2,14 @@ package com.brentaureli.mariobros.Menu;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
@@ -16,7 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.brentaureli.mariobros.Screens.Tools.MyCallbackListener;
+import com.brentaureli.mariobros.Tools.MyCallbackListener;
 import com.brentaureli.mariobros.android.AndroidLauncher;
 import com.brentaureli.mariobros.android.R;
 
@@ -145,5 +148,18 @@ public class ListaUrzadzen extends Activity{
         this.registerReceiver(odbiorca, iFiltr);
         BluetoothAdapter ba=BluetoothAdapter.getDefaultAdapter();
         ba.startDiscovery();
+    }
+    private Dialog createBluetoothMessageDialog() {
+        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setTitle("Bluetooth nie działa");
+        dialogBuilder.setMessage("Może najpierw włącz bluetooth, co?");
+        dialogBuilder.setNegativeButton("Przepraszam", new Dialog.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //w sumie to nic nie musi robić
+            }
+        });
+        dialogBuilder.setCancelable(false);
+        return dialogBuilder.create();
     }
 }

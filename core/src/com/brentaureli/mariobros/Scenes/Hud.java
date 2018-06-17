@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.brentaureli.mariobros.MarioBros;
 import com.brentaureli.mariobros.Sprites.Mario;
-import com.brentaureli.mariobros.Screens.Tools.MyCallbackListener;
+import com.brentaureli.mariobros.Tools.MyCallbackListener;
 
 /**
  * Created by brentaureli on 8/17/15.
@@ -86,8 +86,6 @@ public class Hud implements Disposable{
 
         scoreLabel.setText(String.format("%.0f", value)+"%");
        // System.out.println("ELO"+value);
-
-
     }
 
     @Override

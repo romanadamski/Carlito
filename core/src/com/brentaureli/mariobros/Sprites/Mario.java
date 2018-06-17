@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.Array;
 import com.brentaureli.mariobros.MarioBros;
 import com.brentaureli.mariobros.Scenes.Hud;
 import com.brentaureli.mariobros.Screens.PlayScreen;
-import com.brentaureli.mariobros.Screens.Tools.MyCallbackListener;
+import com.brentaureli.mariobros.Tools.MyCallbackListener;
 
 
 /**
@@ -85,8 +85,12 @@ public class Mario extends Sprite {
     public void update(float dt){
 
        // System.out.println(b2body.getPosition().x);
-        Float pom=(float)35.288307;
-        Hud.addScore((MyCallbackListener.receiveWsp/pom)*100);
+        Float pom=(MyCallbackListener.receiveWsp/(float)34.4843330383)*100;
+        if(pom>100){
+            pom=(float)100;
+        }
+        Hud.addScore(pom);
+
         if (screen.getHud().isTimeUp() && !isDead()) {
             die();
         }
