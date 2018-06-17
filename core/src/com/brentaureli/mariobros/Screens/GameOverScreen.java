@@ -42,29 +42,29 @@ public class GameOverScreen implements Screen {
         Label jaroslawRutkowskiLabel = new Label("Jaroslaw Rutkowski", font);
         Label bartlomiejZdybelLabel = new Label("Bartlomiej Zdybel", font);
         Label lukaszWoznicaLabel = new Label("Lukasz Woznica", font);
-        Label romanAdamskiLabel = new Label("Roman Adamski", font);
+        Label romanAdamskiLabel = new Label("Twórcy : Roman Adamski", font);
 
         if(MyCallbackListener.result==1){
-            table.add(win).expandX().padTop(10f);
+            table.add(win).expandX().padTop(5f);
             table.row();
         }
         else if(MyCallbackListener.result==2){
-            table.add(lose).expandX().padTop(10f);
+            table.add(lose).expandX().padTop(5f);
             table.row();
         }
         else if(MyCallbackListener.result==0){
-            table.add(lose).expandX().padTop(10f);
+            table.add(lose).expandX().padTop(5f);
             table.row();
         }
-        table.add(romanAdamskiLabel).expandX().padTop(10f);
+        table.add(romanAdamskiLabel).expandX().padTop(25f);
         table.row();
-        table.add(jaroslawRutkowskiLabel).expandX().padTop(10f);
+        table.add(jaroslawRutkowskiLabel).expandX().padTop(2f);
         table.row();
-        table.add(katarzynaRymszaLabel).expandX().padTop(10f);
+        table.add(katarzynaRymszaLabel).expandX().padTop(2f);
         table.row();
-        table.add(bartlomiejZdybelLabel).expandX().padTop(10f);
+        table.add(bartlomiejZdybelLabel).expandX().padTop(2f);
         table.row();
-        table.add(lukaszWoznicaLabel).expandX().padTop(10f);
+        table.add(lukaszWoznicaLabel).expandX().padTop(2f);
 
         stage.addActor(table);
     }
