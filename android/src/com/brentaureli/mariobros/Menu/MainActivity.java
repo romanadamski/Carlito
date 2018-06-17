@@ -58,7 +58,7 @@ public class MainActivity extends Activity {
                     serwer.start();
                 }
                 //jeśli połączono-startuje aktywnosc z gra, dopoki nie-wyswietla sie dialog z laczeniem i anuluj
-                class AsyncSerwerOdbior extends AsyncTask<String,Void, Void> {
+                class AsyncSerwer extends AsyncTask<String,Void, Void> {
                     @Override
                     protected Void doInBackground(String... strings) {
                         Intent intent;
@@ -92,8 +92,8 @@ public class MainActivity extends Activity {
                         return null;
                     }
                 }
-                AsyncSerwerOdbior aso = new AsyncSerwerOdbior();
-                aso.execute();
+                AsyncSerwer as = new AsyncSerwer();
+                as.execute();
 
             }
         });
@@ -104,12 +104,11 @@ public class MainActivity extends Activity {
                 context = getApplicationContext();
                 Intent intent = new Intent(context,AndroidLauncher.class);
                 //reset
-                class AsyncSerwerOdbior extends AsyncTask<String,Void, Void> {
+                class AsyncSinglePlayer extends AsyncTask<String,Void, Void> {
                     @Override
                     protected Void doInBackground(String... strings) {
 
                         while(true){
-                            System.out.println("Pomocniczy");
                             if(MyCallbackListener.end==1){
                                 Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName() );
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -119,12 +118,11 @@ public class MainActivity extends Activity {
                                 break;
                             }
                         }
-                        System.out.println("end po wgl: "+MyCallbackListener.end);
                         return null;
                     }
                 }
-                AsyncSerwerOdbior aso = new AsyncSerwerOdbior();
-                aso.execute();
+                AsyncSinglePlayer asp = new AsyncSinglePlayer();
+                asp.execute();
                 startActivity(intent);
 
             }

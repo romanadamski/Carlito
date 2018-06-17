@@ -58,9 +58,9 @@ public class GameOverScreen implements Screen {
         }
         table.add(romanAdamskiLabel).expandX().padTop(10f);
         table.row();
-        table.add(katarzynaRymszaLabel).expandX().padTop(10f);
-        table.row();
         table.add(jaroslawRutkowskiLabel).expandX().padTop(10f);
+        table.row();
+        table.add(katarzynaRymszaLabel).expandX().padTop(10f);
         table.row();
         table.add(bartlomiejZdybelLabel).expandX().padTop(10f);
         table.row();

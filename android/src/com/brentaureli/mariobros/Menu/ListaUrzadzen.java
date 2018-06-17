@@ -50,7 +50,7 @@ public class ListaUrzadzen extends Activity{
                 //jeśli połączono-startuje aktywnosc z gra
                 //na wontku
 
-                class AsyncKlientOdbior extends AsyncTask<String,Void, Void> {
+                class AsyncKlient extends AsyncTask<String,Void, Void> {
                     @Override
                     protected Void doInBackground(String... strings) {
                         Intent intent;
@@ -83,8 +83,8 @@ public class ListaUrzadzen extends Activity{
                         return null;
                     }
                 }
-                AsyncKlientOdbior ako = new AsyncKlientOdbior();
-                ako.execute();
+                AsyncKlient ak = new AsyncKlient();
+                ak.execute();
             }
         });
     }
