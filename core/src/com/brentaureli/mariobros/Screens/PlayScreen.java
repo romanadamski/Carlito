@@ -21,10 +21,10 @@ import com.brentaureli.mariobros.Scenes.Hud;
 import com.brentaureli.mariobros.Sprites.Items.Item;
 import com.brentaureli.mariobros.Sprites.Items.ItemDef;
 import com.brentaureli.mariobros.Sprites.Mario;
-import com.brentaureli.mariobros.Tools.B2WorldCreator;
-import com.brentaureli.mariobros.Tools.Controller;
-import com.brentaureli.mariobros.Tools.MyCallbackListener;
-import com.brentaureli.mariobros.Tools.WorldContactListener;
+import com.brentaureli.mariobros.Screens.Tools.B2WorldCreator;
+import com.brentaureli.mariobros.Screens.Tools.Controller;
+import com.brentaureli.mariobros.Screens.Tools.MyCallbackListener;
+import com.brentaureli.mariobros.Screens.Tools.WorldContactListener;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -130,23 +130,18 @@ public class PlayScreen implements Screen{
     public void handleInput(float dt){
         //control our player using immediate impulses
         if(player.currentState != Mario.State.DEAD) {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.UP)){
-
+            if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
                 player.jump();
-            }
             if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2){
                 player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
             }
             if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2)
                 player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
 
-            if (controller.isUpPressed()){
+            if (controller.isUpPressed())
                 player.jump();
-            }
-
-            if (controller.isRightPressed() && player.b2body.getLinearVelocity().x <= 2){
+            if (controller.isRightPressed() && player.b2body.getLinearVelocity().x <= 2)
                 player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
-            }
             if (controller.isLeftPressed() && player.b2body.getLinearVelocity().x >= -2)
                 player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
 
@@ -196,7 +191,7 @@ public class PlayScreen implements Screen{
         renderer.render();
 
         //renderer our Box2DDebugLines
-        b2dr.render(world, gamecam.combined);
+        //b2dr.render(world, gamecam.combined);
 
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();

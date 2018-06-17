@@ -5,10 +5,6 @@ import android.os.Bundle;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.brentaureli.mariobros.MarioBros;
-import com.brentaureli.mariobros.Menu.ClientBluetooth;
-import com.brentaureli.mariobros.Menu.ServerBluetooth;
-import com.brentaureli.mariobros.Tools.MyCallbackListener;
-import com.google.gson.Gson;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override

@@ -3,7 +3,6 @@ package com.brentaureli.mariobros.Sprites;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -19,7 +18,7 @@ import com.badlogic.gdx.utils.Array;
 import com.brentaureli.mariobros.MarioBros;
 import com.brentaureli.mariobros.Scenes.Hud;
 import com.brentaureli.mariobros.Screens.PlayScreen;
-import com.brentaureli.mariobros.Tools.MyCallbackListener;
+import com.brentaureli.mariobros.Screens.Tools.MyCallbackListener;
 
 
 /**
@@ -199,8 +198,6 @@ public class Mario extends Sprite {
             currentState = State.JUMPING;
         }
     }
-
-
 
 
     public void defineMario(){

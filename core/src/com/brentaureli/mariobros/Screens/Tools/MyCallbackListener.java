@@ -1,4 +1,4 @@
-package com.brentaureli.mariobros.Tools;
+package com.brentaureli.mariobros.Screens.Tools;
 
 import com.badlogic.gdx.ApplicationListener;
 
@@ -12,4 +12,5 @@ public class MyCallbackListener {
     public static float sendWsp =0;
     public static float receiveWsp =0;
     public static int result=0;
+    public static int end=0;
 }

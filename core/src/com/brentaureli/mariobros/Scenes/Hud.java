@@ -1,6 +1,5 @@
 package com.brentaureli.mariobros.Scenes;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -13,7 +12,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.brentaureli.mariobros.MarioBros;
 import com.brentaureli.mariobros.Sprites.Mario;
-import com.brentaureli.mariobros.Tools.MyCallbackListener;
+import com.brentaureli.mariobros.Screens.Tools.MyCallbackListener;
 
 /**
  * Created by brentaureli on 8/17/15.
@@ -65,7 +64,6 @@ public class Hud implements Disposable{
         table.row();
         table.add(scoreLabel).expandX();
         table.add(countdownLabel).expandX();
-
         //add our table to the stage
         stage.addActor(table);
     }

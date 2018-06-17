@@ -1,8 +1,10 @@
 package com.brentaureli.mariobros.Menu;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,7 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.brentaureli.mariobros.Tools.MyCallbackListener;
+import com.brentaureli.mariobros.Screens.Tools.MyCallbackListener;
 import com.brentaureli.mariobros.android.AndroidLauncher;
 import com.brentaureli.mariobros.android.R;
 
@@ -76,13 +78,17 @@ public class MainActivity extends Activity {
                             serwer.write(Float.toString(MyCallbackListener.sendWsp));
                             //serwer odbiera
                             MyCallbackListener.receiveWsp=Float.parseFloat(serwer.wiadPrzych);
-                            System.out.println("serwer odbiera: "+MyCallbackListener.receiveWsp);
-                            //sleep zeby sie nie zacinalo
 
-                            if (!serwer.polaczono.equals("Połączono")){
+                            if(MyCallbackListener.end==1){
+                                Intent intent2 = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName() );
+                                intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent2);
+                                android.os.Process.killProcess(android.os.Process.myPid());
+                                System.exit(0);
                                 break;
                             }
                         }
+
                         return null;
                     }
                 }
@@ -97,6 +103,28 @@ public class MainActivity extends Activity {
                 Context context;
                 context = getApplicationContext();
                 Intent intent = new Intent(context,AndroidLauncher.class);
+                //reset
+                class AsyncSerwerOdbior extends AsyncTask<String,Void, Void> {
+                    @Override
+                    protected Void doInBackground(String... strings) {
+
+                        while(true){
+                            System.out.println("Pomocniczy");
+                            if(MyCallbackListener.end==1){
+                                Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName() );
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                android.os.Process.killProcess(android.os.Process.myPid());
+                                System.exit(0);
+                                break;
+                            }
+                        }
+                        System.out.println("end po wgl: "+MyCallbackListener.end);
+                        return null;
+                    }
+                }
+                AsyncSerwerOdbior aso = new AsyncSerwerOdbior();
+                aso.execute();
                 startActivity(intent);
 
             }
@@ -114,7 +142,12 @@ public class MainActivity extends Activity {
         dialogBuilder.setNegativeButton("Anuluj", new Dialog.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
-                //po kliknieciu anuluj-serwer przestaje nasluchiwac
+                //reset
+                Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName() );
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(0);
             }
         });
         dialogBuilder.setCancelable(false);

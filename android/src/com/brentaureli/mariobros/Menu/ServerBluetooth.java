@@ -17,9 +17,9 @@ import java.util.UUID;
 
 public class ServerBluetooth extends Thread {
     private BluetoothServerSocket SerwerSocket;
-    String wiadWych="Nic nie wysłano";
+    String wiadWych="0";
     String wiadPrzych="0";
-    String polaczono="0";
+    String polaczono="Nie połączono";
     PrintWriter out;
     volatile boolean running = true;
     public ServerBluetooth(){
@@ -38,9 +38,7 @@ public class ServerBluetooth extends Thread {
         BluetoothSocket Socket=null;
         while(true) {
             try {
-                Log.d("przed accept","socket");
                 Socket = SerwerSocket.accept();
-                Log.d("accept","socket");
                 if(Socket.isConnected()){
                     out = new PrintWriter(Socket.getOutputStream(), true);
                     polaczono="Połączono";
@@ -60,6 +58,5 @@ public class ServerBluetooth extends Thread {
     }
     public void write(String wiadomosc){
         out.println(wiadomosc);
-        Log.d("Write serwer",""+wiadomosc);
     }
 }

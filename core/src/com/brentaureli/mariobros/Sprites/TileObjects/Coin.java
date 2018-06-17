@@ -22,7 +22,7 @@ public class Coin extends InteractiveTileObject {
         super(screen, object);
         bdef.type = BodyDef.BodyType.DynamicBody;
         tileSet = map.getTileSets().getTileSet("tileset_gutter");
-        getCell().setTile(tileSet.getTile(127));
+        getCell().setTile(tileSet.getTile(124));
         fixture.setUserData(this);
         setCategoryFilter(MarioBros.COIN_BIT);
     }

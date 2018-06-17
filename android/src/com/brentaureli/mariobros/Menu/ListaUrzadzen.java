@@ -1,6 +1,8 @@
 package com.brentaureli.mariobros.Menu;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
@@ -9,18 +11,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.brentaureli.mariobros.Tools.MyCallbackListener;
+import com.brentaureli.mariobros.Screens.Tools.MyCallbackListener;
 import com.brentaureli.mariobros.android.AndroidLauncher;
 import com.brentaureli.mariobros.android.R;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +43,6 @@ public class ListaUrzadzen extends Activity{
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             public void onItemClick(AdapterView<?> parent, View v, int pos, long id){
                 //pobranie adresu MAC:
-                Log.d("Po wybraniu urz.:","Urzadzenie: "+urzadzeniaTab[pos]+", adres: "+adresyTab[pos]);
                 BluetoothAdapter ba=BluetoothAdapter.getDefaultAdapter();
                 BluetoothDevice server=ba.getRemoteDevice(adresyTab[pos]);
                 final ClientBluetooth klient=new ClientBluetooth(server);
@@ -73,10 +70,13 @@ public class ListaUrzadzen extends Activity{
                             klient.write(Float.toString(MyCallbackListener.sendWsp));
                             //klient odbiera
                             MyCallbackListener.receiveWsp=Float.parseFloat(klient.wiadPrzych);
-                            System.out.println("klient odbiera: "+MyCallbackListener.receiveWsp);
-                            //sleep zeby sie nie zacinalo
 
-                            if (!klient.polaczono.equals("Połączono")){
+                            if(MyCallbackListener.end==1){
+                                Intent intent2 = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName() );
+                                intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent2);
+                                android.os.Process.killProcess(android.os.Process.myPid());
+                                System.exit(0);
                                 break;
                             }
                         }
@@ -130,7 +130,6 @@ public class ListaUrzadzen extends Activity{
                 String nazwaPara=device.getName()+", "+para;
                 urzadzeniaTab[j]=nazwaPara;
                 adresyTab[j]=device.getAddress();
-                Log.d("Znalazlem",nazwaPara+", "+device.getAddress());
                 j++;
                 initUrzadzeniaListView();
             }
