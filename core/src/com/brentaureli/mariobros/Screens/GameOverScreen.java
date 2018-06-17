@@ -36,13 +36,13 @@ public class GameOverScreen implements Screen {
         table.setFillParent(true);
 
 
-        Label win = new Label("Wygrales!", font);
-        Label lose = new Label("Ruchasz male dzieci!", font);
+        Label win = new Label("You won!", font);
+        Label lose = new Label("You lose!", font);
         Label katarzynaRymszaLabel = new Label("Katarzyna Rymsza", font);
         Label jaroslawRutkowskiLabel = new Label("Jaroslaw Rutkowski", font);
         Label bartlomiejZdybelLabel = new Label("Bartlomiej Zdybel", font);
         Label lukaszWoznicaLabel = new Label("Lukasz Woznica", font);
-        Label romanAdamskiLabel = new Label("Twórcy : Roman Adamski", font);
+        Label romanAdamskiLabel = new Label("Credits : Roman Adamski", font);
 
         if(MyCallbackListener.result==1){
             table.add(win).expandX().padTop(5f);
