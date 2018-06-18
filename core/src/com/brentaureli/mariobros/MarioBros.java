@@ -40,7 +40,8 @@ public class MarioBros extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		manager = new AssetManager();
-		manager.load("audio/music/9997.ogg", Music.class);
+		manager.load("audio/music/intro.ogg", Music.class);
+		manager.load("audio/music/997.ogg", Music.class);
 		manager.load("audio/sounds/coin.wav", Sound.class);
 		manager.load("audio/sounds/bump.wav", Sound.class);
 		manager.load("audio/sounds/breakblock.wav", Sound.class);

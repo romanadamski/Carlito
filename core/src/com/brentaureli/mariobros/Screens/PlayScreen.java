@@ -58,6 +58,7 @@ public class PlayScreen implements Screen{
     private Mario player;
 
     private Music music;
+    private Music intro;
 
     private Array<Item> items;
     private LinkedBlockingQueue<ItemDef> itemsToSpawn;
@@ -102,10 +103,14 @@ public class PlayScreen implements Screen{
 
         world.setContactListener(new WorldContactListener());
 
-        music = MarioBros.manager.get("audio/music/9997.ogg", Music.class);
+        intro=MarioBros.manager.get("audio/music/intro.ogg", Music.class);
+        intro.setLooping(false);
+        intro.setVolume(0.4f);
+        intro.play();
+
+        music = MarioBros.manager.get("audio/music/997.ogg", Music.class);
         music.setLooping(true);
         music.setVolume(0.4f);
-        music.play();
 
         items = new Array<Item>();
         itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
@@ -176,6 +181,12 @@ public class PlayScreen implements Screen{
         renderer.setView(gamecam);
 
         MyCallbackListener.sendWsp =player.b2body.getPosition().x;
+        boolean temp=false;
+        //zaczyna grac jesli intro przestanie, ustawia flage zeby nie zaczynac w kolko
+        if(!intro.isPlaying() && !temp){
+            music.play();
+            temp=true;
+        }
     }
 
 
@@ -230,14 +241,14 @@ public class PlayScreen implements Screen{
         else if(player.isFree){
             MyCallbackListener.sendWsp=36;
             MyCallbackListener.result=1;
-            MarioBros.manager.get("audio/music/9997.ogg", Music.class).stop();
+            MarioBros.manager.get("audio/music/997.ogg", Music.class).stop();
             MarioBros.manager.get("audio/sounds/mariowin.wav", Sound.class).play();
             return true;
         }
         //jesli tamten dal znac ze przegral
         else if(MyCallbackListener.receiveWsp==37){
             MyCallbackListener.result=1;
-            MarioBros.manager.get("audio/music/9997.ogg", Music.class).stop();
+            MarioBros.manager.get("audio/music/997.ogg", Music.class).stop();
             MarioBros.manager.get("audio/sounds/mariowin.wav", Sound.class).play();
             return true;
         }
