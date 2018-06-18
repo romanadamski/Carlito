@@ -189,7 +189,6 @@ public class PlayScreen implements Screen{
         }
     }
 
-
     @Override
     public void render(float delta) {
         //separate our update logic from render
