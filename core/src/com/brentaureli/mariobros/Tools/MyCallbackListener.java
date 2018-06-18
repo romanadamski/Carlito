@@ -13,4 +13,6 @@ public class MyCallbackListener {
     public static float receiveWsp =0;
     public static int result=0;
     public static int end=0;
+    public static int sinlgePlay=0;
+
 }

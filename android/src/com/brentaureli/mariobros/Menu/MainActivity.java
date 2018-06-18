@@ -114,6 +114,7 @@ public class MainActivity extends Activity {
                 Context context;
                 context = getApplicationContext();
                 Intent intent = new Intent(context,AndroidLauncher.class);
+                MyCallbackListener.sinlgePlay=1;
                 //reset
                 class AsyncSinglePlayer extends AsyncTask<String,Void, Void> {
                     @Override

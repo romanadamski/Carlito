@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -214,22 +215,30 @@ public class PlayScreen implements Screen{
     }
 
     public boolean gameOver(){
+        //jesli zginal albo skonczyl mu sie czas
         if(player.currentState == Mario.State.DEAD && player.getStateTimer() > 3 ){
             MyCallbackListener.sendWsp=37;
             MyCallbackListener.result=2;
             return true;
         }
+        //jesli tamten wygral
         else if(MyCallbackListener.receiveWsp==36){
             MyCallbackListener.result=2;
             return true;
         }
+        //jesli wygral
         else if(player.isFree){
             MyCallbackListener.sendWsp=36;
             MyCallbackListener.result=1;
+            MarioBros.manager.get("audio/music/9997.ogg", Music.class).stop();
+            MarioBros.manager.get("audio/sounds/mariowin.wav", Sound.class).play();
             return true;
         }
+        //jesli tamten dal znac ze przegral
         else if(MyCallbackListener.receiveWsp==37){
             MyCallbackListener.result=1;
+            MarioBros.manager.get("audio/music/9997.ogg", Music.class).stop();
+            MarioBros.manager.get("audio/sounds/mariowin.wav", Sound.class).play();
             return true;
         }
         return false;

@@ -62,12 +62,14 @@ public class Hud implements Disposable{
         marioLabel2 = new Label("YOU", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         //add our labels to our table, padding the top, and giving them all equal width with expandX
-        table.add(marioLabel).expandX();
+        if(MyCallbackListener.sinlgePlay==1)
+            table.add(marioLabel).expandX();
         table.add(marioLabel2).expandX();
         table.add(timeLabel).expandX();
         //add a second row to our table
         table.row();
-        table.add(scoreLabel).expandX();
+        if(MyCallbackListener.sinlgePlay==1)
+            table.add(scoreLabel).expandX();
         table.add(scoreLabel2).expandX();
         table.add(countdownLabel).expandX();
         //add our table to the stage
