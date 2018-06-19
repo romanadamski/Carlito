@@ -13,16 +13,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
-
 
 import com.brentaureli.mariobros.Tools.MyCallbackListener;
 import com.brentaureli.mariobros.android.AndroidLauncher;
 import com.brentaureli.mariobros.android.R;
 
 public class MainActivity extends Activity {
-    ImageButton bWlaczBluetooth;
-    ImageButton btn_info;
+    Button bWlaczBluetooth;
     Button bDolaczDoGry;
     Button bUtworzNowaGre;
     Button bMario;
@@ -32,8 +29,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bWlaczBluetooth=(ImageButton) findViewById(R.id.btnWlaczBt);
-        btn_info=(ImageButton) findViewById(R.id.btn_info);
+        bWlaczBluetooth=(Button) findViewById(R.id.bWlaczBluetooth);
         bDolaczDoGry=(Button) findViewById(R.id.bDolaczDoGry);
         bUtworzNowaGre=(Button) findViewById(R.id.bUtworzNowaGre);
         bMario=(Button) findViewById(R.id.bMario);
