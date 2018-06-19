@@ -40,10 +40,7 @@ public class B2WorldCreator {
         }
 
         //create coin bodies/fixtures
-        for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
 
-            new Coin(screen, object);
-        }
 
     }
 }
