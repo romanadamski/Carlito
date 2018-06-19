@@ -21,6 +21,7 @@ import com.brentaureli.mariobros.MarioBros;
 import com.brentaureli.mariobros.Scenes.Hud;
 import com.brentaureli.mariobros.Sprites.Items.Item;
 import com.brentaureli.mariobros.Sprites.Items.ItemDef;
+import com.brentaureli.mariobros.Sprites.Items.Key;
 import com.brentaureli.mariobros.Sprites.Mario;
 import com.brentaureli.mariobros.Tools.B2WorldCreator;
 import com.brentaureli.mariobros.Tools.Controller;
@@ -37,6 +38,7 @@ public class PlayScreen implements Screen{
     //Reference to our Game, used to set Screens
     private MarioBros game;
     private TextureAtlas atlas;
+    private TextureAtlas atlasKey;
     public static boolean alreadyDestroyed = false;
 
     //basic playscreen variables
@@ -56,6 +58,7 @@ public class PlayScreen implements Screen{
 
     //sprites
     private Mario player;
+    private Key key;
 
     private Music music;
     private Music intro;
@@ -67,14 +70,10 @@ public class PlayScreen implements Screen{
 
     boolean temp;
 
-    public PlayScreen(String skin){
-
-
-    }
     String skin;
     public PlayScreen(MarioBros game, String skin){
         atlas = new TextureAtlas("KarlitoGFX.atlas");
-
+        atlasKey = new TextureAtlas("Key.pack");
         this.game = game;
         //create cam used to follow mario through cam world
         gamecam = new OrthographicCamera();
@@ -124,14 +123,29 @@ public class PlayScreen implements Screen{
         this.skin=skin;
 
         temp=false;
+
+        //wspolrzedne podane przez konstruktor
+        key=new Key(this, (float)34.4072796631,(float)0.23716700077);
     }
 
     public void spawnItem(ItemDef idef){
         itemsToSpawn.add(idef);
     }
 
+    public void handleSpawningItems(){
+        if(!itemsToSpawn.isEmpty()){
+            ItemDef idef=itemsToSpawn.poll();
+            if(idef.type==Key.class){
+                items.add(new Key(this, 225/ MarioBros.PPM, 100 / MarioBros.PPM));
+            }
+        }
+    }
+
     public TextureAtlas getAtlas(){
         return atlas;
+    }
+    public TextureAtlas getAtlasKey(){
+        return atlasKey;
     }
 
     @Override
@@ -165,12 +179,13 @@ public class PlayScreen implements Screen{
     public void update(float dt){
         //handle user input first
         handleInput(dt);
+        handleSpawningItems();
 
         //takes 1 step in the physics simulation(60 times per second)
         world.step(1 / 60f, 6, 2);
 
         player.update(dt);
-
+        key.update(dt);
         for(Item item : items)
             item.update(dt);
 
@@ -212,6 +227,7 @@ public class PlayScreen implements Screen{
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         player.draw(game.batch);
+        key.draw(game.batch);
         for (Item item : items)
             item.draw(game.batch);
         game.batch.end();
