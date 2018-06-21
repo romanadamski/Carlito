@@ -1,39 +1,107 @@
-<?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.brentaureli.mariobros.Menu.MainActivity">
+
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/linearLayout0"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-        <Button
+        android:layout_margin="5dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/carlito_main_menu"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints,contentDescription">
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Włącz bluetooth"
-            android:layout_gravity="center"
-            android:id="@+id/bWlaczBluetooth"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Dołącz do gry"
-            android:layout_gravity="center"
-            android:id="@+id/bDolaczDoGry"
-            tools:text="NAD"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Utwórz nową grę"
-            android:layout_gravity="center"
-            android:id="@+id/bUtworzNowaGre"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Single player xD"
-            android:layout_gravity="center"
-            android:id="@+id/bMario"/>
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp">
+
+            <ImageButton
+                android:id="@+id/btn_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:src="@layout/info" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="78dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="50dp"
+            android:layout_marginRight="10dp">
+
+            <ImageButton
+                android:id="@+id/btnWlaczBt"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+
+                android:layout_margin="5dp"
+                android:adjustViewBounds="false"
+                android:background="@android:color/transparent"
+                android:cropToPadding="true"
+                android:padding="5dp"
+                android:src="@layout/bluetooth" />
+
+            <Button
+                android:id="@+id/bUtworzNowaGre"
+                android:layout_width="163dp"
+                android:layout_height="84dp"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:layout_toEndOf="@+id/btnWlaczBt"
+                android:layout_toRightOf="@+id/btnWlaczBt"
+                android:padding="5dp"
+                android:text="new game" />
+
+            <Button
+                android:id="@+id/bDolaczDoGry"
+                android:layout_width="150dp"
+                android:layout_height="84dp"
+                android:layout_alignBottom="@+id/bMario"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:layout_toEndOf="@+id/bUtworzNowaGre"
+                android:layout_toRightOf="@+id/bUtworzNowaGre"
+                android:layout_weight="1"
+                android:background="@drawable/join_game"
+                android:padding="5dp"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/bMario"
+                android:layout_width="163dp"
+                android:layout_height="match_parent"
+                android:layout_alignBaseline="@+id/bUtworzNowaGre"
+                android:layout_alignBottom="@+id/bUtworzNowaGre"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:layout_toEndOf="@+id/bDolaczDoGry"
+                android:layout_toRightOf="@+id/bDolaczDoGry"
+                android:padding="5dp"
+                android:text="single player"
+                tools:layout_editor_absoluteX="403dp"
+                tools:layout_editor_absoluteY="297dp" />
+
+        </RelativeLayout>
+
     </LinearLayout>
 
+
 </android.support.constraint.ConstraintLayout>
+

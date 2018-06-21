@@ -22,7 +22,6 @@ import com.brentaureli.mariobros.Scenes.Hud;
 import com.brentaureli.mariobros.Sprites.Items.Item;
 import com.brentaureli.mariobros.Sprites.Items.ItemDef;
 import com.brentaureli.mariobros.Sprites.Items.Key;
-import com.brentaureli.mariobros.Sprites.Items.BOX;
 import com.brentaureli.mariobros.Sprites.Mario;
 import com.brentaureli.mariobros.Tools.B2WorldCreator;
 import com.brentaureli.mariobros.Tools.Controller;
@@ -32,7 +31,9 @@ import com.brentaureli.mariobros.Tools.WorldContactListener;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
-
+/**
+ * Created by brentaureli on 8/14/15.
+ */
 public class PlayScreen implements Screen{
     //Reference to our Game, used to set Screens
     private MarioBros game;
@@ -58,7 +59,6 @@ public class PlayScreen implements Screen{
     //sprites
     private Mario player;
     private Key key;
-    private BOX box;
 
     private Music music;
     private Music intro;
@@ -126,7 +126,6 @@ public class PlayScreen implements Screen{
 
         //wspolrzedne podane przez konstruktor
         key=new Key(this, (float)34.4072796631,(float)0.23716700077);
-       // box=new BOX(this, (float)5, (float)0.54);
     }
 
     public void spawnItem(ItemDef idef){
@@ -139,9 +138,6 @@ public class PlayScreen implements Screen{
             if(idef.type==Key.class){
                 items.add(new Key(this, 225/ MarioBros.PPM, 100 / MarioBros.PPM));
             }
-            /*if(idef.type==BOX.class){
-                items.add(new BOX(this, 230/ MarioBros.PPM, 100 / MarioBros.PPM));
-            }*/
         }
     }
 
@@ -232,7 +228,6 @@ public class PlayScreen implements Screen{
         game.batch.begin();
         player.draw(game.batch);
         key.draw(game.batch);
-       // box.draw(game.batch);
         for (Item item : items)
             item.draw(game.batch);
         game.batch.end();
