@@ -28,7 +28,7 @@ import com.brentaureli.mariobros.Tools.B2WorldCreator;
 import com.brentaureli.mariobros.Tools.Controller;
 import com.brentaureli.mariobros.Tools.MyCallbackListener;
 import com.brentaureli.mariobros.Tools.WorldContactListener;
-
+import com.brentaureli.mariobros.Sprites.Enemy.Enemy;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
@@ -190,6 +190,14 @@ public class PlayScreen implements Screen{
 
         player.update(dt);
         key.update(dt);
+
+        for(Enemy enemy : creator.getEnemies()) {
+            enemy.update(dt);
+            if(enemy.getX() < player.getX() + 224 / MarioBros.PPM) {
+                enemy.b2body.setActive(true);
+            }
+        }
+
         for(Item item : items)
             item.update(dt);
 
@@ -226,13 +234,16 @@ public class PlayScreen implements Screen{
         renderer.render();
 
         //renderer our Box2DDebugLines
-        //b2dr.render(world, gamecam.combined);
+        b2dr.render(world, gamecam.combined);
 
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         player.draw(game.batch);
         key.draw(game.batch);
-       // box.draw(game.batch);
+
+        for (Enemy enemy : creator.getEnemies())
+            enemy.draw(game.batch);
+
         for (Item item : items)
             item.draw(game.batch);
         game.batch.end();

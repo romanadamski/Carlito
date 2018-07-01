@@ -19,6 +19,7 @@ import com.brentaureli.mariobros.MarioBros;
 import com.brentaureli.mariobros.Scenes.Hud;
 import com.brentaureli.mariobros.Screens.PlayScreen;
 import com.brentaureli.mariobros.Tools.MyCallbackListener;
+import com.brentaureli.mariobros.Sprites.Enemy.Enemy;
 
 
 /**
@@ -39,13 +40,12 @@ public class Mario extends Sprite {
 
     private float stateTimer;
     private boolean runningRight;
-    private boolean marioIsBig;
-    private boolean timeToRedefineMario;
+
     private boolean marioIsDead;
     private PlayScreen screen;
     public boolean isFree=false;
     public boolean IfEnemyIsFree=false;
-
+    public BodyDef bdef = new BodyDef();
     private String skin="KARLITO";
     public Mario(PlayScreen screen, String skin){
         //initialize default values
@@ -73,10 +73,13 @@ public class Mario extends Sprite {
         marioDead = new TextureRegion(screen.getAtlas().findRegion(skin), 96, 0, 16, 36);
 
         //define mario in Box2d
+
         defineMario();
+
 
         //set initial values for marios location, width and height. And initial frame as marioStand.
         setBounds(0, 0, 16 / MarioBros.PPM, 45 / MarioBros.PPM);
+
         setRegion(marioStand);
 
     }
@@ -106,13 +109,12 @@ public class Mario extends Sprite {
         }
         if(b2body.getPosition().y<0)
         {
-            die();
+             die();
+            bdef.position.set(225/ MarioBros.PPM, 36 / MarioBros.PPM);
         }
         //update our sprite to correspond with the position of our Box2D body
-        if(marioIsBig)
-            setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2 - 6 / MarioBros.PPM);
-        else
-            setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+
+        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         //update sprite with the correct frame depending on marios current action
         setRegion(getFrame(dt));
 
@@ -175,7 +177,6 @@ public class Mario extends Sprite {
 
         else if(b2body.getLinearVelocity().x != 0)
             return State.RUNNING;
-
         else
             return State.STANDING;
     }
@@ -215,9 +216,8 @@ public class Mario extends Sprite {
         }
     }
 
+    public BodyDef defineMario(){
 
-    public void defineMario(){
-        BodyDef bdef = new BodyDef();
 
         bdef.position.set(225/ MarioBros.PPM, 36 / MarioBros.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
@@ -247,6 +247,7 @@ public class Mario extends Sprite {
         fdef.isSensor = true;
 
         b2body.createFixture(fdef).setUserData(this);
+        return bdef;
     }
 
 }

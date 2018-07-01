@@ -11,6 +11,7 @@ import com.brentaureli.mariobros.MarioBros;
 import com.brentaureli.mariobros.Sprites.Items.Item;
 import com.brentaureli.mariobros.Sprites.Mario;
 import com.brentaureli.mariobros.Sprites.TileObjects.InteractiveTileObject;
+import com.brentaureli.mariobros.Sprites.Enemy.Enemy;
 
 /**
  * Created by brentaureli on 9/4/15.
@@ -30,6 +31,24 @@ public class WorldContactListener implements ContactListener {
                     ((InteractiveTileObject) fixB.getUserData()).onHeadHit((Mario) fixA.getUserData());
                 else
                     ((InteractiveTileObject) fixA.getUserData()).onHeadHit((Mario) fixB.getUserData());
+                break;
+            case MarioBros.ENEMY_HEAD_BIT | MarioBros.MARIO_BIT:
+                if(fixA.getFilterData().categoryBits == MarioBros.ENEMY_HEAD_BIT)
+                    ((Enemy)fixA.getUserData()).hitOnHead((Mario) fixB.getUserData());
+                else
+                    ((Enemy)fixB.getUserData()).hitOnHead((Mario) fixA.getUserData());
+                break;
+            case MarioBros.ENEMY_BIT | MarioBros.OBJECT_BIT:
+                if(fixA.getFilterData().categoryBits == MarioBros.ENEMY_BIT)
+                    ((Enemy)fixA.getUserData()).reverseVelocity(true, false);
+                else
+                    ((Enemy)fixB.getUserData()).reverseVelocity(true, false);
+                break;
+            case MarioBros.MARIO_BIT | MarioBros.ENEMY_BIT:
+                if(fixA.getFilterData().categoryBits == MarioBros.MARIO_BIT)
+                    ((Mario) fixA.getUserData()).die();
+                else
+                    ((Mario) fixB.getUserData()).die();
                 break;
             case MarioBros.ITEM_BIT | MarioBros.OBJECT_BIT:
                 if(fixA.getFilterData().categoryBits == MarioBros.ITEM_BIT)
