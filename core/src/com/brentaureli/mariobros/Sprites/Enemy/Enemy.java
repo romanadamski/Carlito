@@ -1,6 +1,7 @@
 package com.brentaureli.mariobros.Sprites.Enemy;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
@@ -18,7 +19,7 @@ public abstract class Enemy extends Sprite {
         this.screen = screen;
         setPosition(x, y);
         defineEnemy();
-        velocity = new Vector2(-1, -2);
+        velocity = new Vector2(1, -2);
         b2body.setActive(false);
     }
 
@@ -27,10 +28,17 @@ public abstract class Enemy extends Sprite {
     public abstract void hitOnHead(Mario mario);
     public abstract void hitByEnemy(Enemy enemy);
 
-    public void reverseVelocity(boolean x, boolean y){
-        if(x)
+    public boolean reverseVelocity(boolean x, boolean y, TextureRegion region){
+        if(x) {
             velocity.x = -velocity.x;
+
+           // setRegion(region);
+            return true;
+        }
         if(y)
             velocity.y = -velocity.y;
+
+        return false;
+
     }
 }

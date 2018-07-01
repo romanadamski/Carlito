@@ -44,7 +44,7 @@ public class B2WorldCreator {
         bagiety = new Array<bagietson>();
         for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bagiety.add(new bagietson(screen, rect.getX() / MarioBros.PPM, rect.getY() / MarioBros.PPM));
+            bagiety.add(new bagietson(screen, rect.getX()/ MarioBros.PPM, rect.getY() / MarioBros.PPM));
         }
 
 

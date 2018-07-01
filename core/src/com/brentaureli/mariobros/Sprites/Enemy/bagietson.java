@@ -22,13 +22,14 @@ public class bagietson extends Enemy {
     private boolean setToDestroy;
     private boolean destroyed;
     float angle;
+    int i=0;
 
     public bagietson(PlayScreen screen, float x, float y) {
         super(screen, x, y);
         frames = new Array<TextureRegion>();
 
         for(int i = 0; i < 3; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("Bagieta"), i * 16, 0, 16, 36));
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("Bagieta"), i * 16, 10, 16, 36));
 
         walkAnimation = new Animation(0.2f, frames);
 
@@ -85,8 +86,11 @@ public class bagietson extends Enemy {
     }
     @Override
     public void update(float dt) {
+
+        TextureRegion region;
+        region=walkAnimation.getKeyFrame(stateTime, true);
         stateTime += dt;
-        System.out.println("x:"+getX()+"y:"+getY());
+        i++;
         if(setToDestroy && !destroyed){
             world.destroyBody(b2body);
             destroyed = true;
@@ -97,7 +101,17 @@ public class bagietson extends Enemy {
         else if(!destroyed) {
             b2body.setLinearVelocity(velocity);
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
-            setRegion(walkAnimation.getKeyFrame(stateTime, true));
+
+            setRegion(region);
+
+            if(i>100) {
+               reverseVelocity(true,false,region);
+                region.flip(true,false);
+
+                i=0;
+            }
+
+
         }
     }
 
@@ -109,7 +123,7 @@ public class bagietson extends Enemy {
 
     @Override
     public void hitByEnemy(Enemy enemy) {
-            reverseVelocity(true, false);
+           // reverseVelocity(true, false);
     }
 
 }
