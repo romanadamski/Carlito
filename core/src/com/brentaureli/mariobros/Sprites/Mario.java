@@ -84,22 +84,25 @@ public class Mario extends Sprite {
     public void update(float dt){
 
        // System.out.println(b2body.getPosition().x);
-        Float pom=((MyCallbackListener.receiveWsp-(float)2.25)/(float)32.2343330383) *100;
-        if(pom>100){
-            pom=(float)100;
+        if(b2body.getPosition().y>=0){
+            Float pom, pom2;
+            pom=((MyCallbackListener.receiveWsp-(float)2.25)/(float)32.2343330383) *100;
+            if(pom>100){
+                pom=(float)100;
+            }
+            else if(pom<0){
+                pom=(float)0;
+            }
+            pom2=((b2body.getPosition().x-(float)2.25)/(float)32.2343330383) *100;
+            if(pom2>100){
+                pom2=(float)100;
+            }
+            else if(pom2<0){
+                pom2=(float)0;
+            }
+            Hud.addScore(pom);
+            Hud.addScore2(pom2);
         }
-        else if(pom<0){
-            pom=(float)0;
-        }
-        Float pom2=((b2body.getPosition().x-(float)2.25)/(float)32.2343330383) *100;
-        if(pom2>100){
-            pom2=(float)100;
-        }
-        else if(pom2<0){
-            pom2=(float)0;
-        }
-        Hud.addScore(pom);
-        Hud.addScore2(pom2);
 
         if (screen.getHud().isTimeUp() && !isDead()) {
             die();

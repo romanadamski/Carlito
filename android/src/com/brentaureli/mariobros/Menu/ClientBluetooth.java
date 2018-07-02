@@ -3,6 +3,7 @@ package com.brentaureli.mariobros.Menu;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,6 +22,7 @@ public class ClientBluetooth extends Thread {
     String wiadPrzych="0";
     String polaczono="Nie połączono";
     PrintWriter out;
+    public static boolean disconnect;
     public ClientBluetooth(BluetoothDevice device){
         BluetoothSocket temp = null;
         Device = device;
@@ -36,18 +38,19 @@ public class ClientBluetooth extends Thread {
             Socket.connect();
             if(Socket.isConnected()){
                 polaczono="Połączono";
+                disconnect=false;
             }
             out = new PrintWriter(Socket.getOutputStream(), true);
 
         }catch (Exception e){
-
         }
         while(true){
             try{
                 BufferedReader in=new BufferedReader(new InputStreamReader(Socket.getInputStream()));
                 wiadPrzych=in.readLine();
             }catch (Exception e){
-
+                //info o rozlaczeniu
+                disconnect=true;
             }
         }
     }
