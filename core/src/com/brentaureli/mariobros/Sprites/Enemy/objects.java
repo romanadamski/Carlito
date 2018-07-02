@@ -19,9 +19,11 @@ public abstract class objects extends Sprite {
         this.world = screen.getWorld();
         this.screen = screen;
         setPosition(x, y);
+
         defineObject();
+
         velocity = new Vector2(0, 0);
-        b2body.setActive(false);
+        b2body.setActive(true);
     }
 
     protected abstract void defineObject();

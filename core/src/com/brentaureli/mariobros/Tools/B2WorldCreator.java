@@ -14,11 +14,17 @@ import com.brentaureli.mariobros.MarioBros;
 import com.brentaureli.mariobros.Screens.PlayScreen;
 import com.brentaureli.mariobros.Sprites.Enemy.Enemy;
 import com.brentaureli.mariobros.Sprites.Enemy.bagietson;
+import com.brentaureli.mariobros.Sprites.Enemy.objects;
+import com.brentaureli.mariobros.Sprites.Enemy.BOX;
+
+import javax.swing.Box;
+
 /**
  * Created by brentaureli on 8/28/15.
  */
 public class B2WorldCreator {
-        private  Array<bagietson> bagiety;
+        private Array<bagietson> bagiety;
+        private Array<BOX> pudelka;
     public B2WorldCreator(PlayScreen screen){
 
         World world = screen.getWorld();
@@ -41,10 +47,16 @@ public class B2WorldCreator {
             fdef.shape = shape;
             body.createFixture(fdef);
         }
+
         bagiety = new Array<bagietson>();
         for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bagiety.add(new bagietson(screen, rect.getX()/ MarioBros.PPM, rect.getY() / MarioBros.PPM));
+        }
+        pudelka =new Array<BOX>();
+        for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            pudelka.add(new BOX(screen, rect.getX()/ MarioBros.PPM, rect.getY() / MarioBros.PPM));
         }
 
 
@@ -56,6 +68,11 @@ public class B2WorldCreator {
         Array<Enemy> enemies = new Array<Enemy>();
         enemies.addAll(bagiety);
         return enemies;
+    }
+    public Array<BOX> getBoxes(){
+        Array<BOX> boxes = new Array<BOX>();
+        boxes.addAll(pudelka);
+        return boxes;
     }
 }
 
