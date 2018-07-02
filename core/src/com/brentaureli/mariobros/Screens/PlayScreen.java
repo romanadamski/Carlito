@@ -22,14 +22,16 @@ import com.brentaureli.mariobros.Scenes.Hud;
 import com.brentaureli.mariobros.Sprites.Items.Item;
 import com.brentaureli.mariobros.Sprites.Items.ItemDef;
 import com.brentaureli.mariobros.Sprites.Items.Key;
-import com.brentaureli.mariobros.Sprites.Items.BOX;
+import com.brentaureli.mariobros.Sprites.Enemy.BOX;
 import com.brentaureli.mariobros.Sprites.Mario;
 import com.brentaureli.mariobros.Tools.B2WorldCreator;
 import com.brentaureli.mariobros.Tools.Controller;
 import com.brentaureli.mariobros.Tools.MyCallbackListener;
 import com.brentaureli.mariobros.Tools.WorldContactListener;
-
+import com.brentaureli.mariobros.Sprites.Enemy.Enemy;
 import java.util.concurrent.LinkedBlockingQueue;
+import com.brentaureli.mariobros.Sprites.Enemy.objects;
+import com.brentaureli.mariobros.Sprites.Enemy.BOX;
 
 
 
@@ -58,7 +60,6 @@ public class PlayScreen implements Screen{
     //sprites
     private Mario player;
     private Key key;
-    private BOX box;
 
     private Music music;
     private Music intro;
@@ -73,7 +74,7 @@ public class PlayScreen implements Screen{
     String skin;
     public PlayScreen(MarioBros game, String skin){
         atlas = new TextureAtlas("KarlitoGFX.atlas");
-        atlasKey = new TextureAtlas("Key.pack");
+        atlasKey = new TextureAtlas("items.pack");
         this.game = game;
         //create cam used to follow mario through cam world
         gamecam = new OrthographicCamera();
@@ -125,7 +126,7 @@ public class PlayScreen implements Screen{
         temp=false;
 
         //wspolrzedne podane przez konstruktor
-        key=new Key(this, (float)34.4072796631,(float)0.23716700077);
+        key=new Key(this, (float)34.572796631,(float)0.7);
        // box=new BOX(this, (float)5, (float)0.54);
     }
 
@@ -137,7 +138,7 @@ public class PlayScreen implements Screen{
         if(!itemsToSpawn.isEmpty()){
             ItemDef idef=itemsToSpawn.poll();
             if(idef.type==Key.class){
-                items.add(new Key(this, 225/ MarioBros.PPM, 100 / MarioBros.PPM));
+                items.add(new Key(this, 250/ MarioBros.PPM, 150 / MarioBros.PPM));
             }
             /*if(idef.type==BOX.class){
                 items.add(new BOX(this, 230/ MarioBros.PPM, 100 / MarioBros.PPM));
@@ -190,6 +191,17 @@ public class PlayScreen implements Screen{
 
         player.update(dt);
         key.update(dt);
+
+        for(Enemy enemy : creator.getEnemies()) {
+            enemy.update(dt);
+            if(enemy.getX() < player.getX() + 224 / MarioBros.PPM) {
+                enemy.b2body.setActive(true);
+            }
+        }
+        for(objects boxes : creator.getBoxes()) {
+            boxes.update(dt);
+        }
+
         for(Item item : items)
             item.update(dt);
 
@@ -226,13 +238,19 @@ public class PlayScreen implements Screen{
         renderer.render();
 
         //renderer our Box2DDebugLines
-        //b2dr.render(world, gamecam.combined);
+        b2dr.render(world, gamecam.combined);
 
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         player.draw(game.batch);
         key.draw(game.batch);
-       // box.draw(game.batch);
+
+        for (Enemy enemy : creator.getEnemies())
+            enemy.draw(game.batch);
+
+        for (objects boxes : creator.getBoxes())
+            boxes.draw(game.batch);
+
         for (Item item : items)
             item.draw(game.batch);
         game.batch.end();

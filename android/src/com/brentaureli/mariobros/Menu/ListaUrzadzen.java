@@ -74,6 +74,15 @@ public class ListaUrzadzen extends Activity{
                             //klient odbiera
                             MyCallbackListener.receiveWsp=Float.parseFloat(klient.wiadPrzych);
 
+
+                            if(ClientBluetooth.disconnect || ServerBluetooth.disconnect){
+                                Intent intent2 = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName() );
+                                intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent2);
+                                android.os.Process.killProcess(android.os.Process.myPid());
+                                System.exit(0);
+                            }
+
                             if(MyCallbackListener.end==1){
                                 Intent intent2 = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName() );
                                 intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

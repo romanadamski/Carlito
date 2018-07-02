@@ -22,6 +22,7 @@ public class ServerBluetooth extends Thread {
     String polaczono="Nie połączono";
     PrintWriter out;
     volatile boolean running = true;
+    public static boolean disconnect;
     public ServerBluetooth(){
         BluetoothAdapter mBluetoothAdapter=BluetoothAdapter.getDefaultAdapter();
         BluetoothServerSocket temp=null;
@@ -40,6 +41,7 @@ public class ServerBluetooth extends Thread {
             try {
                 Socket = SerwerSocket.accept();
                 if(Socket.isConnected()){
+                    disconnect=false;
                     out = new PrintWriter(Socket.getOutputStream(), true);
                     polaczono="Połączono";
                     break;
@@ -52,7 +54,8 @@ public class ServerBluetooth extends Thread {
                 BufferedReader in=new BufferedReader(new InputStreamReader(Socket.getInputStream()));
                 wiadPrzych=in.readLine();
             }catch(IOException e){
-
+                //info o rozlaczeniu
+                disconnect=true;
             }
         }
     }

@@ -1,19 +1,25 @@
-
 KarlitoGFX.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 KARLITO
   rotate: false
-  xy: 1, 1
+  xy: 1, 13
   size: 336, 36
   orig: 336, 36
   offset: 0, 0
   index: -1
 KARLITO2
   rotate: false
-  xy: 339, 1
+  xy: 339, 13
   size: 336, 36
   orig: 336, 36
+  offset: 0, 0
+  index: -1
+Bagieta
+  rotate: false
+  xy: 677, 1
+  size: 146, 48
+  orig: 146, 48
   offset: 0, 0
   index: -1

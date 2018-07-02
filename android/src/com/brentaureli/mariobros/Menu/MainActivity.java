@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
     Button bMario;
     ServerBluetooth serwer;
     BluetoothAdapter ba;
+    boolean czy=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +60,7 @@ public class MainActivity extends Activity {
             }
         });
         bUtworzNowaGre.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 if(!ba.isEnabled()){
@@ -92,6 +94,16 @@ public class MainActivity extends Activity {
                                 serwer.write(Float.toString(MyCallbackListener.sendWsp));
                                 //serwer odbiera
                                 MyCallbackListener.receiveWsp=Float.parseFloat(serwer.wiadPrzych);
+                                //
+                                if(ClientBluetooth.disconnect || ServerBluetooth.disconnect){
+                                    Intent intent2 = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName() );
+                                    intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent2);
+                                    android.os.Process.killProcess(android.os.Process.myPid());
+                                    System.exit(0);
+                                    czy=true;
+                                    disconnectDialog().show();
+                                }
 
                                 if(MyCallbackListener.end==1){
                                     Intent intent2 = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName() );
@@ -102,7 +114,6 @@ public class MainActivity extends Activity {
                                     break;
                                 }
                             }
-
                             return null;
                         }
                     }
@@ -119,12 +130,17 @@ public class MainActivity extends Activity {
                 context = getApplicationContext();
                 Intent intent = new Intent(context,AndroidLauncher.class);
                 MyCallbackListener.sinlgePlay=1;
-                //reset
+
                 class AsyncSinglePlayer extends AsyncTask<String,Void, Void> {
                     @Override
                     protected Void doInBackground(String... strings) {
 
                         while(true){
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                             if(MyCallbackListener.end==1){
                                 Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName() );
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -165,7 +181,7 @@ public class MainActivity extends Activity {
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setTitle("Bluetooth nie działa");
         dialogBuilder.setMessage("Może najpierw włącz bluetooth, co?");
-        dialogBuilder.setNegativeButton("Przepraszam", new Dialog.OnClickListener() {
+        dialogBuilder.setNegativeButton("No już, już", new Dialog.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
                 //w sumie to nic nie musi robić
@@ -185,4 +201,20 @@ public class MainActivity extends Activity {
         pokazSie.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
         startActivity(pokazSie);
     }
+
+    private Dialog disconnectDialog() {
+        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setTitle("AAAAAAAAA");
+        dialogBuilder.setMessage("Rozłączyło cię z przeciwnikiem");
+        dialogBuilder.setNegativeButton("To pszypau", new Dialog.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //reset
+
+            }
+        });
+        dialogBuilder.setCancelable(false);
+        return dialogBuilder.create();
+    }
+
 }
