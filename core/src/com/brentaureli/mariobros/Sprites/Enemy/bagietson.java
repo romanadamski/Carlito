@@ -19,8 +19,10 @@ public class bagietson extends Enemy {
     private float stateTime;
     private Animation walkAnimation;
     private Array<TextureRegion> frames;
-    private boolean setToDestroy;
+    private Animation walkAnimation2;
+
     private boolean destroyed;
+    private boolean runningright;
     float angle;
     int i=0;
 
@@ -32,6 +34,7 @@ public class bagietson extends Enemy {
             frames.add(new TextureRegion(screen.getAtlas().findRegion("Bagieta"), i * 16, 10, 16, 36));
 
         walkAnimation = new Animation(0.2f, frames);
+
 
         stateTime = 0;
         setBounds(0, 0, 16 / MarioBros.PPM, 45 / MarioBros.PPM);
@@ -63,18 +66,17 @@ public class bagietson extends Enemy {
         shape.setPosition(new Vector2(0/ MarioBros.PPM, -14 / MarioBros.PPM));
         b2body.createFixture(fdef).setUserData(this);
 
-        /*PolygonShape head = new PolygonShape();
+        PolygonShape head = new PolygonShape();
 
         Vector2[] vertice = new Vector2[4];
-        vertice[0] = new Vector2(-5, 8).scl(1 / MarioBros.PPM);
-        vertice[1] = new Vector2(5, 8).scl(1 / MarioBros.PPM);
-        vertice[2] = new Vector2(-3, 3).scl(1 / MarioBros.PPM);
-        vertice[3] = new Vector2(3, 3).scl(1 / MarioBros.PPM);
-        head.set(vertice);*/
-        EdgeShape head = new EdgeShape();
-        head.set(new Vector2(-2 / MarioBros.PPM, 6 / MarioBros.PPM), new Vector2(2 / MarioBros.PPM, 6 / MarioBros.PPM));
+        vertice[0] = new Vector2(-3, 12).scl(1 / MarioBros.PPM);
+        vertice[1] = new Vector2(3, 12).scl(1 / MarioBros.PPM);
+        vertice[2] = new Vector2(-2, 5).scl(1 / MarioBros.PPM);
+        vertice[3] = new Vector2(2, 5).scl(1 / MarioBros.PPM);
+        head.set(vertice);
+
         fdef.shape = head;
-      //  fdef.restitution = 0.5f;
+        fdef.restitution = 0.5f;
         fdef.isSensor = true;
         fdef.filter.categoryBits = MarioBros.ENEMY_HEAD_BIT;
         b2body.createFixture(fdef).setUserData(this);
@@ -88,42 +90,49 @@ public class bagietson extends Enemy {
     public void update(float dt) {
 
         TextureRegion region;
-        region=walkAnimation.getKeyFrame(stateTime, true);
+
         stateTime += dt;
         i++;
         if(setToDestroy && !destroyed){
             world.destroyBody(b2body);
             destroyed = true;
 
-            setRegion(new TextureRegion(screen.getAtlas().findRegion("Bagieta"), 48, 0, 16, 36));
+            setRegion(new TextureRegion(screen.getAtlas().findRegion("Bagieta"), 48, 12, 16, 36));
             stateTime = 0;
         }
         else if(!destroyed) {
             b2body.setLinearVelocity(velocity);
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
-
+            region=walkAnimation.getKeyFrame(stateTime, true);
             setRegion(region);
 
-            if(i>100) {
-               reverseVelocity(true,false,region);
-                region.flip(true,false);
-
-                i=0;
+            if(i==150) {
+               reverseVelocity(true,false);
+               i=0;
+            }
+            if((b2body.getLinearVelocity().x < 0 || !runningright) && !region.isFlipX()){
+                region.flip(true, false);
+                runningright = false;
             }
 
-
+            else if((b2body.getLinearVelocity().x > 0 || runningright) && region.isFlipX()){
+                region.flip(true, false);
+                runningright = true;
+            }
         }
     }
 
     @Override
     public void hitOnHead(Mario mario) {
-        setToDestroy = true;
+        if(!mario.isDead()) {
+            setToDestroy = true;
+        }
 
     }
 
     @Override
     public void hitByEnemy(Enemy enemy) {
-           // reverseVelocity(true, false);
+          // reverseVelocity(true, false);
     }
 
 }

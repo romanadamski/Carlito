@@ -1,5 +1,6 @@
 package com.brentaureli.mariobros.Sprites.Items;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -15,10 +16,11 @@ import com.brentaureli.mariobros.Sprites.Mario;
 
 public class Key extends Item {
 
+        TextureRegion key;
     public Key(PlayScreen screen, float x, float y) {
         super(screen, x, y);
-        setRegion(screen.getAtlasKey().findRegion("Key"), 0,0,16, 16);
-        velocity=new Vector2(0,0);
+
+        key=new TextureRegion(screen.getAtlasKey().findRegion("Key"), 0,0,16, 16);
         setBounds(getX(), getY(), 16/MarioBros.PPM, 16/MarioBros.PPM);
     }
 
@@ -26,7 +28,7 @@ public class Key extends Item {
     public void defineItem() {
         BodyDef bdef=new BodyDef();
         bdef.position.set(getX(), getY());
-        bdef.type=BodyDef.BodyType.DynamicBody;
+        bdef.type=BodyDef.BodyType.StaticBody;
         body=world.createBody(bdef);
 
         FixtureDef fdef=new FixtureDef();
@@ -53,7 +55,8 @@ public class Key extends Item {
     public void update(float dt) {
         super.update(dt);
         setPosition(getX(), getY());
-        body.setLinearVelocity(velocity);
+        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        setRegion(key);
 
     }
 }

@@ -22,7 +22,7 @@ import com.brentaureli.mariobros.Scenes.Hud;
 import com.brentaureli.mariobros.Sprites.Items.Item;
 import com.brentaureli.mariobros.Sprites.Items.ItemDef;
 import com.brentaureli.mariobros.Sprites.Items.Key;
-import com.brentaureli.mariobros.Sprites.Items.BOX;
+import com.brentaureli.mariobros.Sprites.Enemy.BOX;
 import com.brentaureli.mariobros.Sprites.Mario;
 import com.brentaureli.mariobros.Tools.B2WorldCreator;
 import com.brentaureli.mariobros.Tools.Controller;
@@ -125,7 +125,7 @@ public class PlayScreen implements Screen{
         temp=false;
 
         //wspolrzedne podane przez konstruktor
-        key=new Key(this, (float)34.4072796631,(float)0.23716700077);
+        key=new Key(this, (float)34.572796631,(float)0.7);
        // box=new BOX(this, (float)5, (float)0.54);
     }
 
@@ -137,7 +137,7 @@ public class PlayScreen implements Screen{
         if(!itemsToSpawn.isEmpty()){
             ItemDef idef=itemsToSpawn.poll();
             if(idef.type==Key.class){
-                items.add(new Key(this, 225/ MarioBros.PPM, 100 / MarioBros.PPM));
+                items.add(new Key(this, 250/ MarioBros.PPM, 150 / MarioBros.PPM));
             }
             /*if(idef.type==BOX.class){
                 items.add(new BOX(this, 230/ MarioBros.PPM, 100 / MarioBros.PPM));

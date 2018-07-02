@@ -8,26 +8,25 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.brentaureli.mariobros.Screens.PlayScreen;
 import com.brentaureli.mariobros.Sprites.Mario;
 
-public abstract class Enemy extends Sprite {
+public abstract class objects extends Sprite {
+
     protected World world;
     protected PlayScreen screen;
     public Body b2body;
     public Vector2 velocity;
-    public boolean setToDestroy;
 
-    public Enemy(PlayScreen screen, float x, float y){
+    public objects(PlayScreen screen, float x, float y){
         this.world = screen.getWorld();
         this.screen = screen;
         setPosition(x, y);
-        defineEnemy();
-        velocity = new Vector2(1, -2);
+        defineObject();
+        velocity = new Vector2(0, 0);
         b2body.setActive(false);
     }
 
-    protected abstract void defineEnemy();
+    protected abstract void defineObject();
+
     public abstract void update(float dt);
-    public abstract void hitOnHead(Mario mario);
-    public abstract void hitByEnemy(Enemy enemy);
 
     public boolean reverseVelocity(boolean x, boolean y){
         if(x) {

@@ -215,7 +215,9 @@ public class Mario extends Sprite {
             currentState = State.JUMPING;
         }
     }
-
+    public void hit(Enemy enemy){
+                die();
+    }
     public BodyDef defineMario(){
 
 

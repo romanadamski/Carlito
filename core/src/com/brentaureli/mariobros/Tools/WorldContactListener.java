@@ -38,17 +38,17 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((Enemy)fixB.getUserData()).hitOnHead((Mario) fixA.getUserData());
                 break;
-            /*case MarioBros.ENEMY_BIT | MarioBros.OBJECT_BIT:
+            case MarioBros.ENEMY_BIT | MarioBros.OBJECT_BIT:
                 if(fixA.getFilterData().categoryBits == MarioBros.ENEMY_BIT)
                     ((Enemy)fixA.getUserData()).reverseVelocity(true, false);
                 else
                     ((Enemy)fixB.getUserData()).reverseVelocity(true, false);
-                break;*/
+                break;
             case MarioBros.MARIO_BIT | MarioBros.ENEMY_BIT:
                 if(fixA.getFilterData().categoryBits == MarioBros.MARIO_BIT)
-                    ((Mario) fixA.getUserData()).die();
+                    ((Mario) fixA.getUserData()).hit((Enemy)fixB.getUserData());
                 else
-                    ((Mario) fixB.getUserData()).die();
+                    ((Mario) fixB.getUserData()).hit((Enemy)fixA.getUserData());
                 break;
             case MarioBros.ITEM_BIT | MarioBros.OBJECT_BIT:
                 if(fixA.getFilterData().categoryBits == MarioBros.ITEM_BIT)
