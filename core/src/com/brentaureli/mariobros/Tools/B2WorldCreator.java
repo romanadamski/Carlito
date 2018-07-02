@@ -9,18 +9,21 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.brentaureli.mariobros.MarioBros;
 import com.brentaureli.mariobros.Screens.PlayScreen;
-import com.brentaureli.mariobros.Sprites.TileObjects.Coin;
+import com.brentaureli.mariobros.Sprites.Enemy.Enemy;
+import com.brentaureli.mariobros.Sprites.Enemy.bagietson;
 /**
  * Created by brentaureli on 8/28/15.
  */
 public class B2WorldCreator {
-
+        private  Array<bagietson> bagiety;
     public B2WorldCreator(PlayScreen screen){
+
         World world = screen.getWorld();
         TiledMap map = screen.getMap();
-        //create body and fixture variables
+
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
@@ -38,10 +41,21 @@ public class B2WorldCreator {
             fdef.shape = shape;
             body.createFixture(fdef);
         }
+        bagiety = new Array<bagietson>();
+        for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            bagiety.add(new bagietson(screen, rect.getX()/ MarioBros.PPM, rect.getY() / MarioBros.PPM));
+        }
 
-        //create coin bodies/fixtures
 
-
+    }
+    public Array<bagietson> wezBagiete() {
+        return bagiety;
+    }
+    public Array<Enemy> getEnemies(){
+        Array<Enemy> enemies = new Array<Enemy>();
+        enemies.addAll(bagiety);
+        return enemies;
     }
 }
 
