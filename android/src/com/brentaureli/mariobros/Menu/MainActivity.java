@@ -181,7 +181,7 @@ public class MainActivity extends Activity {
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setTitle("Bluetooth nie działa");
         dialogBuilder.setMessage("Może najpierw włącz bluetooth, co?");
-        dialogBuilder.setNegativeButton("No już, już", new Dialog.OnClickListener() {
+        dialogBuilder.setNegativeButton("OK", new Dialog.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
                 //w sumie to nic nie musi robić
