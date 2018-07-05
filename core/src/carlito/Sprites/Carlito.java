@@ -15,7 +15,8 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import carlito.MarioBros;
+
+import carlito.CarlitoEscape;
 import carlito.Scenes.Hud;
 import carlito.Screens.PlayScreen;
 import carlito.Tools.MyCallbackListener;
@@ -26,7 +27,7 @@ import carlito.Sprites.Enemy.Enemy;
  * Created by brentaureli on 8/27/15.
  */
 
-public class Mario extends Sprite {
+public class Carlito extends Sprite {
     public enum State { FALLING, JUMPING, STANDING, RUNNING, DEAD };
     public State currentState;
     public State previousState;
@@ -48,7 +49,7 @@ public class Mario extends Sprite {
     public boolean IfEnemyIsFree=false;
     public BodyDef bdef = new BodyDef();
     private String skin="KARLITO";
-    public Mario(PlayScreen screen, String skin){
+    public Carlito(PlayScreen screen, String skin){
         //initialize default values
         this.screen = screen;
         this.world = screen.getWorld();
@@ -79,7 +80,7 @@ public class Mario extends Sprite {
 
 
         //set initial values for marios location, width and height. And initial frame as marioStand.
-        setBounds(0, 0, 16 / MarioBros.PPM, 36 / MarioBros.PPM);
+        setBounds(0, 0, 16 / CarlitoEscape.PPM, 36 / CarlitoEscape.PPM);
 
         setRegion(marioStand);
 
@@ -123,7 +124,7 @@ public class Mario extends Sprite {
         //update sprite with the correct frame depending on marios current action
         setRegion(getFrame(dt));
         if (marioIsDead)
-            setPosition(225/ MarioBros.PPM, 36 / MarioBros.PPM);
+            setPosition(225/ CarlitoEscape.PPM, 36 / CarlitoEscape.PPM);
 
 
 
@@ -194,12 +195,12 @@ public class Mario extends Sprite {
         if (!isDead()) {
 
 
-            MarioBros.manager.get("audio/music/intro.ogg", Music.class).stop();
-            MarioBros.manager.get("audio/music/997.ogg", Music.class).stop();
-            MarioBros.manager.get("audio/sounds/mariodie.wav", Sound.class).play();
+            CarlitoEscape.manager.get("audio/music/intro.ogg", Music.class).stop();
+            CarlitoEscape.manager.get("audio/music/997.ogg", Music.class).stop();
+            CarlitoEscape.manager.get("audio/sounds/mariodie.wav", Sound.class).play();
             marioIsDead = true;
             Filter filter = new Filter();
-            filter.maskBits = MarioBros.NOTHING_BIT;
+            filter.maskBits = CarlitoEscape.NOTHING_BIT;
 
             for (Fixture fixture : b2body.getFixtureList()) {
                 fixture.setFilterData(filter);
@@ -236,30 +237,30 @@ public class Mario extends Sprite {
     }
     public BodyDef defineMario(){
 
-        bdef.position.set(225/ MarioBros.PPM, 36 / MarioBros.PPM);
+        bdef.position.set(225/ CarlitoEscape.PPM, 36 / CarlitoEscape.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(6 / MarioBros.PPM);
-        fdef.filter.categoryBits = MarioBros.MARIO_BIT;
-        fdef.filter.maskBits = MarioBros.GROUND_BIT |
-                MarioBros.COIN_BIT |
-                MarioBros.BRICK_BIT |
-                MarioBros.ENEMY_BIT |
-                MarioBros.OBJECT_BIT |
-                MarioBros.ENEMY_HEAD_BIT |
-                MarioBros.ITEM_BIT;
+        shape.setRadius(6 / CarlitoEscape.PPM);
+        fdef.filter.categoryBits = CarlitoEscape.MARIO_BIT;
+        fdef.filter.maskBits = CarlitoEscape.GROUND_BIT |
+                CarlitoEscape.COIN_BIT |
+                CarlitoEscape.BRICK_BIT |
+                CarlitoEscape.ENEMY_BIT |
+                CarlitoEscape.OBJECT_BIT |
+                CarlitoEscape.ENEMY_HEAD_BIT |
+                CarlitoEscape.ITEM_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
-        shape.setPosition(new Vector2(0/ MarioBros.PPM, -12 / MarioBros.PPM));
+        shape.setPosition(new Vector2(0/ CarlitoEscape.PPM, -12 / CarlitoEscape.PPM));
         b2body.createFixture(fdef).setUserData(this);
 
         EdgeShape head = new EdgeShape();
-        head.set(new Vector2(-2 / MarioBros.PPM, 6 / MarioBros.PPM), new Vector2(2 / MarioBros.PPM, 6 / MarioBros.PPM));
-        fdef.filter.categoryBits = MarioBros.MARIO_HEAD_BIT;
+        head.set(new Vector2(-2 / CarlitoEscape.PPM, 6 / CarlitoEscape.PPM), new Vector2(2 / CarlitoEscape.PPM, 6 / CarlitoEscape.PPM));
+        fdef.filter.categoryBits = CarlitoEscape.MARIO_HEAD_BIT;
         fdef.shape = head;
         fdef.isSensor = true;
 

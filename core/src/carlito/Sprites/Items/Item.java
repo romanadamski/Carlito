@@ -5,9 +5,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import carlito.MarioBros;
+
+import carlito.CarlitoEscape;
 import carlito.Screens.PlayScreen;
-import carlito.Sprites.Mario;
+import carlito.Sprites.Carlito;
 
 /**
  * Created by brentaureli on 9/24/15.
@@ -27,12 +28,12 @@ public abstract class Item extends Sprite {
         destroyed = false;
 
         setPosition(x, y);
-        setBounds(getX(), getY(), 16 / MarioBros.PPM, 16 / MarioBros.PPM);
+        setBounds(getX(), getY(), 16 / CarlitoEscape.PPM, 16 / CarlitoEscape.PPM);
         defineItem();
     }
 
     public abstract void defineItem();
-    public abstract void use(Mario mario);
+    public abstract void use(Carlito carlito);
 
     public void update(float dt){
         if(toDestroy && !destroyed){

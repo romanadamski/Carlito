@@ -1,14 +1,12 @@
 package carlito.Sprites.Items;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import carlito.MarioBros;
+import carlito.CarlitoEscape;
 import carlito.Screens.PlayScreen;
-import carlito.Sprites.Mario;
+import carlito.Sprites.Carlito;
 
 /**
  * Created by romek95a on 19.06.2018.
@@ -21,7 +19,7 @@ public class Key extends Item {
         super(screen, x, y);
 
         key=new TextureRegion(screen.getAtlasKey().findRegion("Key"), 0,0,16, 16);
-        setBounds(getX(), getY(), 16/MarioBros.PPM, 16/MarioBros.PPM);
+        setBounds(getX(), getY(), 16/ CarlitoEscape.PPM, 16/ CarlitoEscape.PPM);
     }
 
     @Override
@@ -33,22 +31,22 @@ public class Key extends Item {
 
         FixtureDef fdef=new FixtureDef();
         CircleShape shape=new CircleShape();
-        shape.setRadius(6/ MarioBros.PPM);
-        fdef.filter.categoryBits=MarioBros.ITEM_BIT;
-        fdef.filter.maskBits=MarioBros.MARIO_BIT |
-                MarioBros.OBJECT_BIT |
-                MarioBros.GROUND_BIT |
-                MarioBros.COIN_BIT |
-                MarioBros.BRICK_BIT;
+        shape.setRadius(6/ CarlitoEscape.PPM);
+        fdef.filter.categoryBits= CarlitoEscape.ITEM_BIT;
+        fdef.filter.maskBits= CarlitoEscape.MARIO_BIT |
+                CarlitoEscape.OBJECT_BIT |
+                CarlitoEscape.GROUND_BIT |
+                CarlitoEscape.COIN_BIT |
+                CarlitoEscape.BRICK_BIT;
 
         fdef.shape=shape;
         body.createFixture(fdef).setUserData(this);
     }
 
     @Override
-    public void use(Mario mario) {
+    public void use(Carlito carlito) {
         destroy();
-        mario.isFree=true;
+        carlito.isFree=true;
     }
 
     @Override

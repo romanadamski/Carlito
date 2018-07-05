@@ -7,7 +7,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import carlito.Screens.PlayScreen;
 
-public class MarioBros extends Game {
+public class CarlitoEscape extends Game {
 	//Virtual Screen size and Box2D Scale(Pixels Per Meter)
 	public static final int V_WIDTH = 400;
 	public static final int V_HEIGHT = 208;
@@ -32,7 +32,7 @@ public class MarioBros extends Game {
 	We will use it in the static context to save time for now. */
 	public static AssetManager manager;
 
-	public MarioBros(String skin){
+	public CarlitoEscape(String skin){
 		this.skin=skin;
 	}
 	String skin;

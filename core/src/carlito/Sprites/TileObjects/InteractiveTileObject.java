@@ -3,7 +3,6 @@ package carlito.Sprites.TileObjects;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -13,11 +12,10 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
-import carlito.MarioBros;
-import carlito.Scenes.Hud;
+
+import carlito.CarlitoEscape;
 import carlito.Screens.PlayScreen;
-import carlito.Sprites.Mario;
+import carlito.Sprites.Carlito;
 
 /**
  * Created by brentaureli on 8/28/15.
@@ -44,17 +42,17 @@ public abstract class InteractiveTileObject {
         PolygonShape shape = new PolygonShape();
 
         bdef.type = BodyDef.BodyType.StaticBody;
-        bdef.position.set((bounds.getX() + bounds.getWidth() / 2) / MarioBros.PPM, (bounds.getY() + bounds.getHeight() / 2) / MarioBros.PPM);
+        bdef.position.set((bounds.getX() + bounds.getWidth() / 2) / CarlitoEscape.PPM, (bounds.getY() + bounds.getHeight() / 2) / CarlitoEscape.PPM);
 
         body = world.createBody(bdef);
 
-        shape.setAsBox(bounds.getWidth() / 2 / MarioBros.PPM, bounds.getHeight() / 2 / MarioBros.PPM);
+        shape.setAsBox(bounds.getWidth() / 2 / CarlitoEscape.PPM, bounds.getHeight() / 2 / CarlitoEscape.PPM);
         fdef.shape = shape;
         fixture = body.createFixture(fdef);
 
     }
 
-    public abstract void onHeadHit(Mario mario);
+    public abstract void onHeadHit(Carlito carlito);
     public void setCategoryFilter(short filterBit){
         Filter filter = new Filter();
         filter.categoryBits = filterBit;
@@ -63,8 +61,8 @@ public abstract class InteractiveTileObject {
 
     public TiledMapTileLayer.Cell getCell(){
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
-        return layer.getCell((int)(body.getPosition().x * MarioBros.PPM / 16),
-                (int)(body.getPosition().y * MarioBros.PPM / 16));
+        return layer.getCell((int)(body.getPosition().x * CarlitoEscape.PPM / 16),
+                (int)(body.getPosition().y * CarlitoEscape.PPM / 16));
     }
 
 }

@@ -1,12 +1,10 @@
 package carlito.Sprites.Enemy;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import carlito.Screens.PlayScreen;
-import carlito.Sprites.Mario;
 
 public abstract class objects extends Sprite {
 
