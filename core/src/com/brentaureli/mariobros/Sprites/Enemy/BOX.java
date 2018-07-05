@@ -20,22 +20,52 @@ import com.brentaureli.mariobros.Sprites.Mario;
 
 public class BOX extends objects {
 
+    private TextureRegion stand;
 
     public BOX(PlayScreen screen, float x, float y){
         super(screen, x, y);
-     TextureRegion region=new TextureRegion(screen.getAtlasKey().findRegion("BOX"), 0,0,32, 32);
 
+        stand=new TextureRegion(screen.getAtlasKey().findRegion("sk1"), 0,0,32, 32);
 
+        setBounds(0, 0, 32 / MarioBros.PPM, 32 / MarioBros.PPM);
 
     }
 
     @Override
     protected void defineObject() {
+        BodyDef bdef=new BodyDef();
+        bdef.position.set(getX(), getY());
+
+        bdef.type=BodyDef.BodyType.DynamicBody;
+
+        b2body=world.createBody(bdef);
+
+        b2body.setActive(false);
+        b2body.setSleepingAllowed(true);
+        b2body.setGravityScale(2);
+
+        FixtureDef fdef=new FixtureDef();
+        PolygonShape shape=new PolygonShape();
+        shape.setAsBox(16/MarioBros.PPM,16/MarioBros.PPM);
+        fdef.filter.categoryBits=MarioBros.BRICK_BIT;
+        fdef.filter.maskBits=MarioBros.MARIO_BIT |
+                MarioBros.OBJECT_BIT |
+                MarioBros.GROUND_BIT |
+                MarioBros.COIN_BIT |
+                MarioBros.BRICK_BIT;
+
+        fdef.shape=shape;
+        b2body.createFixture(fdef).setUserData(this);
 
     }
+    public void draw(Batch batch){
+            super.draw(batch);
+    }
+
 
     @Override
     public void update(float dt) {
-        setPosition(getX(), getY());
+        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+        setRegion(stand);
     }
 }

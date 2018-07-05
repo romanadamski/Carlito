@@ -30,6 +30,8 @@ import com.brentaureli.mariobros.Tools.MyCallbackListener;
 import com.brentaureli.mariobros.Tools.WorldContactListener;
 import com.brentaureli.mariobros.Sprites.Enemy.Enemy;
 import java.util.concurrent.LinkedBlockingQueue;
+import com.brentaureli.mariobros.Sprites.Enemy.objects;
+import com.brentaureli.mariobros.Sprites.Enemy.BOX;
 
 
 
@@ -58,7 +60,6 @@ public class PlayScreen implements Screen{
     //sprites
     private Mario player;
     private Key key;
-    private BOX box;
 
     private Music music;
     private Music intro;
@@ -73,7 +74,7 @@ public class PlayScreen implements Screen{
     String skin;
     public PlayScreen(MarioBros game, String skin){
         atlas = new TextureAtlas("KarlitoGFX.atlas");
-        atlasKey = new TextureAtlas("Key.pack");
+        atlasKey = new TextureAtlas("items.pack");
         this.game = game;
         //create cam used to follow mario through cam world
         gamecam = new OrthographicCamera();
@@ -197,6 +198,9 @@ public class PlayScreen implements Screen{
                 enemy.b2body.setActive(true);
             }
         }
+        for(objects boxes : creator.getBoxes()) {
+            boxes.update(dt);
+        }
 
         for(Item item : items)
             item.update(dt);
@@ -243,6 +247,9 @@ public class PlayScreen implements Screen{
 
         for (Enemy enemy : creator.getEnemies())
             enemy.draw(game.batch);
+
+        for (objects boxes : creator.getBoxes())
+            boxes.draw(game.batch);
 
         for (Item item : items)
             item.draw(game.batch);
