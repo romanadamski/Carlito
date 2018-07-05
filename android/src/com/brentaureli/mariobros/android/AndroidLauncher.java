@@ -30,17 +30,7 @@ public class AndroidLauncher extends AndroidApplication {
 		MarioBros marioBros=new MarioBros(skin);
 		initialize(marioBros, config);
 		if(MyCallbackListener.sinlgePlay>-1){
-			/*AsyncKlient ak = new AsyncKlient();
-			ak.execute();
-			if(!ak.isCancelled()){
-				disconnectDialog().show();
-			}*/
-			/*
-			ak ak=new ak();
-			ak.start();
-			*/
-			dupa d=new dupa();
-			//d.run();
+
 		}
 	}
 
@@ -74,75 +64,11 @@ public class AndroidLauncher extends AndroidApplication {
 		dialogBuilder.setCancelable(false);
 		return dialogBuilder.create();
 	}
-	/*
-	class AsyncKlient extends AsyncTask<String,Void, Void> {
-		@Override
-		protected Void doInBackground(String... strings) {
-			backButtonDialog().show();
-			while(true){
-				if(ClientBluetooth.disconnect || ServerBluetooth.disconnect){
-					//dialog o rozlaczeniu i "OK" resetuje
-					System.out.println("androidlaucher: jestem w ifie");
-					disconnectDialog().show();
-				}
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-			}
-			//return null;
-		}
-	}*/
-	/*
-	class ak extends Thread{
-		@Override
-		public void run(){
-			while(true){
-				if(ClientBluetooth.disconnect || ServerBluetooth.disconnect){
-					//dialog o rozlaczeniu i "OK" resetuje
-					System.out.println("androidlaucher: jestem w ifie");
-					break;
-				}
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-			}
-			disconnectDialog().show();
-		}
-	}
-	*/
-	class dupa implements Runnable{
-		public void run(){
-			while(true){
-				if(ClientBluetooth.disconnect || ServerBluetooth.disconnect){
-					Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName() );
-					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-					startActivity(intent);
-					android.os.Process.killProcess(android.os.Process.myPid());
-					System.exit(0);
-					System.out.println("androidlaucher: jestem w ifie");
-					break;
-				}
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-			}
-			disconnectDialog().show();
-		}
-	}
 	private Dialog disconnectDialog() {
 		final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-		dialogBuilder.setTitle("AAAAAAAAA");
-		dialogBuilder.setMessage("Rozłączyło cię z przeciwnikiem");
-		dialogBuilder.setNegativeButton("To pszypau", new Dialog.OnClickListener() {
+		dialogBuilder.setTitle("Problem z połączeniem");
+		dialogBuilder.setMessage("Zostałeś rozłączony z drugim użytkownikiem");
+		dialogBuilder.setNegativeButton("Wróć do menu", new Dialog.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int whichButton) {
 				//reset

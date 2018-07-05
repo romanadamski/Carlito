@@ -33,21 +33,16 @@ import java.util.Vector;
 
 public class ListaUrzadzen extends Activity{
     private ListView lv;
-    int j, rozmiar;
-    String[] urzadzeniaTab=new String[20];
-    String[] adresyTab=new String[20];
-
-    Vector<String> urzadzenia=new Vector();
-    List<String> adresy=new ArrayList();
+    ArrayList<String> listOfUsers;
+    List<String> listOfMacs;
+    private CustomAdapter customAdapter;
 
     private void initUrzadzeniaListView(){
-        lv.setAdapter(new ArrayAdapter<String>(getBaseContext(),
-                android.R.layout.simple_list_item_1,urzadzeniaTab));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             public void onItemClick(AdapterView<?> parent, View v, int pos, long id){
                 //pobranie adresu MAC:
                 BluetoothAdapter ba=BluetoothAdapter.getDefaultAdapter();
-                BluetoothDevice server=ba.getRemoteDevice(adresyTab[pos]);
+                BluetoothDevice server=ba.getRemoteDevice(listOfMacs.get(pos));
                 final ClientBluetooth klient=new ClientBluetooth(server);
                 klient.start();
                 //jeśli połączono-startuje aktywnosc z gra
@@ -103,9 +98,13 @@ public class ListaUrzadzen extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lista_urzadzen);
-        j=0;
-        wykryjInne();
+        listOfUsers=new ArrayList<>();
+        listOfMacs=new ArrayList<>();
+        customAdapter=new CustomAdapter(this, listOfUsers);
         lv = (ListView) findViewById(R.id.list);
+        lv.setAdapter(customAdapter);
+        initUrzadzeniaListView();
+        wykryjInne();
     }
 
     @Override
@@ -140,19 +139,13 @@ public class ListaUrzadzen extends Activity{
                     para="sparowane";
                 }
                 String nazwaPara=device.getName()+", "+para;
-                urzadzeniaTab[j]=nazwaPara;
-                adresyTab[j]=device.getAddress();
-                j++;
-                initUrzadzeniaListView();
+                customAdapter.add(nazwaPara);
+                listOfMacs.add(device.getAddress());
             }
         }
 
     };
     void wykryjInne(){
-        for(int i=0;i<20;i++){
-            urzadzeniaTab[i]="";
-            adresyTab[i]="";
-        }
         IntentFilter iFiltr=new IntentFilter(BluetoothDevice.ACTION_FOUND);
         this.registerReceiver(odbiorca, iFiltr);
         BluetoothAdapter ba=BluetoothAdapter.getDefaultAdapter();
@@ -162,7 +155,7 @@ public class ListaUrzadzen extends Activity{
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setTitle("Bluetooth nie działa");
         dialogBuilder.setMessage("Może najpierw włącz bluetooth, co?");
-        dialogBuilder.setNegativeButton("Przepraszam", new Dialog.OnClickListener() {
+        dialogBuilder.setNegativeButton("OK", new Dialog.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
                 //w sumie to nic nie musi robić
