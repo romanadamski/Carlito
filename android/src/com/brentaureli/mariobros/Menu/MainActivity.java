@@ -20,6 +20,9 @@ import com.brentaureli.mariobros.Tools.MyCallbackListener;
 import com.brentaureli.mariobros.android.AndroidLauncher;
 import com.brentaureli.mariobros.android.R;
 
+/**
+ * Created by romek95a on 14.05.2018.
+ */
 public class MainActivity extends Activity {
     ImageButton bWlaczBluetooth;
     ImageButton btn_info;
@@ -181,7 +184,7 @@ public class MainActivity extends Activity {
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setTitle("Bluetooth nie działa");
         dialogBuilder.setMessage("Może najpierw włącz bluetooth, co?");
-        dialogBuilder.setNegativeButton("No już, już", new Dialog.OnClickListener() {
+        dialogBuilder.setNegativeButton("OK", new Dialog.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
                 //w sumie to nic nie musi robić
