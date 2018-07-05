@@ -115,13 +115,16 @@ public class Mario extends Sprite {
         if(b2body.getPosition().y<0)
         {
             die();
-            bdef.position.set(225/ MarioBros.PPM, 36 / MarioBros.PPM);
+
         }
         //update our sprite to correspond with the position of our Box2D body
 
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         //update sprite with the correct frame depending on marios current action
         setRegion(getFrame(dt));
+        if (marioIsDead)
+            setPosition(225/ MarioBros.PPM, 36 / MarioBros.PPM);
+
 
 
     }
@@ -203,6 +206,8 @@ public class Mario extends Sprite {
             }
             if(this.b2body.getLinearVelocity().y<0)
                 b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
+
+
         }
     }
 
