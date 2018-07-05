@@ -20,6 +20,9 @@ import com.brentaureli.mariobros.Tools.MyCallbackListener;
 import com.brentaureli.mariobros.android.AndroidLauncher;
 import com.brentaureli.mariobros.android.R;
 
+/**
+ * Created by romek95a on 14.05.2018.
+ */
 public class MainActivity extends Activity {
     ImageButton bWlaczBluetooth;
     ImageButton btn_info;

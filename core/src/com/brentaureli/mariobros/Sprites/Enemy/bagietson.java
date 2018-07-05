@@ -14,6 +14,9 @@ import com.brentaureli.mariobros.MarioBros;
 import com.brentaureli.mariobros.Screens.PlayScreen;
 import com.brentaureli.mariobros.Sprites.Mario;
 
+/**
+ * Created by jarekciotajebanaszmata on 8/27/15.
+ */
 public class bagietson extends Enemy {
 
     private float stateTime;
@@ -31,7 +34,7 @@ public class bagietson extends Enemy {
         frames = new Array<TextureRegion>();
 
         for(int i = 0; i < 3; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("Bagieta"), i * 16, 10, 16, 36));
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("Bagieta" ), i * 16, 50, 16, 36));
 
         walkAnimation = new Animation(0.2f, frames);
 
@@ -54,6 +57,7 @@ public class bagietson extends Enemy {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
+        PolygonShape square=new PolygonShape();
         shape.setRadius(6 / MarioBros.PPM);
         fdef.filter.categoryBits = MarioBros.ENEMY_BIT;
         fdef.filter.maskBits = MarioBros.GROUND_BIT |
@@ -63,18 +67,24 @@ public class bagietson extends Enemy {
                 MarioBros.OBJECT_BIT |
                 MarioBros.MARIO_BIT;
 
-        fdef.shape = shape;
+        square.setAsBox(6/MarioBros.PPM,6/MarioBros.PPM);
+        fdef.shape=square;
         b2body.createFixture(fdef).setUserData(this);
-        shape.setPosition(new Vector2(0/ MarioBros.PPM, -14 / MarioBros.PPM));
+
+        /*
+        b2body.createFixture(fdef).setUserData(this);
+        */
+        fdef.shape = shape;
+        shape.setPosition(new Vector2(0/ MarioBros.PPM, -13 / MarioBros.PPM));
         b2body.createFixture(fdef).setUserData(this);
 
         PolygonShape head = new PolygonShape();
 
         Vector2[] vertice = new Vector2[4];
-        vertice[0] = new Vector2(-3, 12).scl(1 / MarioBros.PPM);
-        vertice[1] = new Vector2(3, 12).scl(1 / MarioBros.PPM);
-        vertice[2] = new Vector2(-2, 5).scl(1 / MarioBros.PPM);
-        vertice[3] = new Vector2(2, 5).scl(1 / MarioBros.PPM);
+        vertice[0] = new Vector2(-5, 10).scl(1 / MarioBros.PPM);
+        vertice[1] = new Vector2(5, 10).scl(1 / MarioBros.PPM);
+        vertice[2] = new Vector2(-5, 4).scl(1 / MarioBros.PPM);
+        vertice[3] = new Vector2(5, 4).scl(1 / MarioBros.PPM);
         head.set(vertice);
 
         fdef.shape = head;
@@ -128,13 +138,15 @@ public class bagietson extends Enemy {
     public void hitOnHead(Mario mario) {
         if(!mario.isDead()) {
             setToDestroy = true;
+            if(mario.b2body.getLinearVelocity().y<0)
+                mario.jumpEnemy();
         }
 
     }
 
     @Override
     public void hitByEnemy(Enemy enemy) {
-          // reverseVelocity(true, false);
+          reverseVelocity(true, false);
     }
 
 }

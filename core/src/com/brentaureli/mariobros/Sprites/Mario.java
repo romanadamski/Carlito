@@ -25,6 +25,7 @@ import com.brentaureli.mariobros.Sprites.Enemy.Enemy;
 /**
  * Created by brentaureli on 8/27/15.
  */
+
 public class Mario extends Sprite {
     public enum State { FALLING, JUMPING, STANDING, RUNNING, DEAD };
     public State currentState;
@@ -78,7 +79,7 @@ public class Mario extends Sprite {
 
 
         //set initial values for marios location, width and height. And initial frame as marioStand.
-        setBounds(0, 0, 16 / MarioBros.PPM, 45 / MarioBros.PPM);
+        setBounds(0, 0, 16 / MarioBros.PPM, 36 / MarioBros.PPM);
 
         setRegion(marioStand);
 
@@ -90,6 +91,7 @@ public class Mario extends Sprite {
         if(b2body.getPosition().y>=0){
             Float pom, pom2;
             pom=((MyCallbackListener.receiveWsp-(float)2.25)/(float)32.2343330383) *100;
+            //pom=this.b2body.getPosition().y;
             if(pom>100){
                 pom=(float)100;
             }
@@ -112,7 +114,7 @@ public class Mario extends Sprite {
         }
         if(b2body.getPosition().y<0)
         {
-             die();
+            die();
             bdef.position.set(225/ MarioBros.PPM, 36 / MarioBros.PPM);
         }
         //update our sprite to correspond with the position of our Box2D body
@@ -199,8 +201,8 @@ public class Mario extends Sprite {
             for (Fixture fixture : b2body.getFixtureList()) {
                 fixture.setFilterData(filter);
             }
-
-            b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
+            if(this.b2body.getLinearVelocity().y<0)
+                b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
         }
     }
 
@@ -213,16 +215,21 @@ public class Mario extends Sprite {
     }
 
     public void jump(){
-        if ( currentState != State.JUMPING ) {
+        if ( currentState != State.JUMPING && currentState != State.DEAD) {
             b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
             currentState = State.JUMPING;
         }
     }
+    public void jumpEnemy(){
+        b2body.applyLinearImpulse(new Vector2(0, 6f), b2body.getWorldCenter(), true);
+        currentState = State.JUMPING;
+    }
     public void hit(Enemy enemy){
-                die();
+        if(!enemy.setToDestroy) {
+            die();
+        }
     }
     public BodyDef defineMario(){
-
 
         bdef.position.set(225/ MarioBros.PPM, 36 / MarioBros.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
@@ -242,7 +249,7 @@ public class Mario extends Sprite {
 
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
-        shape.setPosition(new Vector2(0/ MarioBros.PPM, -14 / MarioBros.PPM));
+        shape.setPosition(new Vector2(0/ MarioBros.PPM, -12 / MarioBros.PPM));
         b2body.createFixture(fdef).setUserData(this);
 
         EdgeShape head = new EdgeShape();
