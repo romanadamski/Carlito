@@ -10,8 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import carlito.MarioBros;
-import carlito.Sprites.Mario;
+import carlito.CarlitoEscape;
+import carlito.Sprites.Carlito;
 import carlito.Tools.MyCallbackListener;
 
 /**
@@ -23,7 +23,7 @@ public class Hud implements Disposable{
     public Stage stage;
     private Viewport viewport;
 
-    //Mario score/time Tracking Variables
+    //Carlito score/time Tracking Variables
     private Integer worldTimer;
     private boolean timeUp; // true when the world timer reaches 0
     private float timeCount;
@@ -37,13 +37,13 @@ public class Hud implements Disposable{
     private static Label scoreLabel2;
     private Label marioLabel2;
 
-    public Hud(SpriteBatch sb, Mario mario){
+    public Hud(SpriteBatch sb, Carlito carlito){
         worldTimer = 100;
         timeCount = 0;
         score= MyCallbackListener.receiveWsp;
 
 
-        viewport = new FitViewport(MarioBros.V_WIDTH, MarioBros.V_HEIGHT, new OrthographicCamera());
+        viewport = new FitViewport(CarlitoEscape.V_WIDTH, CarlitoEscape.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
 
         //define a table used to organize our hud's labels

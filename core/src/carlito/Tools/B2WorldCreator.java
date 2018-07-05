@@ -10,14 +10,12 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import carlito.MarioBros;
+
+import carlito.CarlitoEscape;
 import carlito.Screens.PlayScreen;
 import carlito.Sprites.Enemy.Enemy;
 import carlito.Sprites.Enemy.bagietson;
-import carlito.Sprites.Enemy.objects;
 import carlito.Sprites.Enemy.BOX;
-
-import javax.swing.Box;
 
 /**
  * Created by brentaureli on 8/28/15.
@@ -40,10 +38,10 @@ public class B2WorldCreator {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / MarioBros.PPM, (rect.getY() + rect.getHeight() / 2) / MarioBros.PPM);
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / CarlitoEscape.PPM, (rect.getY() + rect.getHeight() / 2) / CarlitoEscape.PPM);
 
             body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth() / 2 / MarioBros.PPM, rect.getHeight() / 2 / MarioBros.PPM);
+            shape.setAsBox(rect.getWidth() / 2 / CarlitoEscape.PPM, rect.getHeight() / 2 / CarlitoEscape.PPM);
             fdef.shape = shape;
             body.createFixture(fdef);
         }
@@ -51,12 +49,12 @@ public class B2WorldCreator {
         bagiety = new Array<bagietson>();
         for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bagiety.add(new bagietson(screen, rect.getX()/ MarioBros.PPM, rect.getY() / MarioBros.PPM));
+            bagiety.add(new bagietson(screen, rect.getX()/ CarlitoEscape.PPM, rect.getY() / CarlitoEscape.PPM));
         }
         pudelka =new Array<BOX>();
         for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            pudelka.add(new BOX(screen, rect.getX()/ MarioBros.PPM, rect.getY() / MarioBros.PPM));
+            pudelka.add(new BOX(screen, rect.getX()/ CarlitoEscape.PPM, rect.getY() / CarlitoEscape.PPM));
         }
 
 

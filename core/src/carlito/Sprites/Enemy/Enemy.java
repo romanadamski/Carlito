@@ -1,12 +1,11 @@
 package carlito.Sprites.Enemy;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import carlito.Screens.PlayScreen;
-import carlito.Sprites.Mario;
+import carlito.Sprites.Carlito;
 
 public abstract class Enemy extends Sprite {
     protected World world;
@@ -26,7 +25,7 @@ public abstract class Enemy extends Sprite {
 
     protected abstract void defineEnemy();
     public abstract void update(float dt);
-    public abstract void hitOnHead(Mario mario);
+    public abstract void hitOnHead(Carlito carlito);
     public abstract void hitByEnemy(Enemy enemy);
 
     public boolean reverseVelocity(boolean x, boolean y){

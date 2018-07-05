@@ -2,7 +2,6 @@ package carlito.Screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -13,7 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import carlito.MarioBros;
+
+import carlito.CarlitoEscape;
 import carlito.Tools.MyCallbackListener;
 
 /**
@@ -27,8 +27,8 @@ public class GameOverScreen implements Screen {
 
     public GameOverScreen(Game game){
         this.game = game;
-        viewport = new FitViewport(MarioBros.V_WIDTH, MarioBros.V_HEIGHT, new OrthographicCamera());
-        stage = new Stage(viewport, ((MarioBros) game).batch);
+        viewport = new FitViewport(CarlitoEscape.V_WIDTH, CarlitoEscape.V_HEIGHT, new OrthographicCamera());
+        stage = new Stage(viewport, ((CarlitoEscape) game).batch);
 
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
 
@@ -78,7 +78,7 @@ public class GameOverScreen implements Screen {
     public void render(float delta) {
         if(Gdx.input.justTouched()) {
             MyCallbackListener.end=1;
-            //game.setScreen(new PlayScreen((MarioBros) game, "KARLITO"));
+            //game.setScreen(new PlayScreen((CarlitoEscape) game, "KARLITO"));
             //dispose();
         }
         Gdx.gl.glClearColor(0, 0, 0, 1);

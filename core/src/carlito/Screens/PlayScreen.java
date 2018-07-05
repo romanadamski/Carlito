@@ -17,13 +17,13 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import carlito.MarioBros;
+
+import carlito.CarlitoEscape;
 import carlito.Scenes.Hud;
+import carlito.Sprites.Carlito;
 import carlito.Sprites.Items.Item;
 import carlito.Sprites.Items.ItemDef;
 import carlito.Sprites.Items.Key;
-import carlito.Sprites.Enemy.BOX;
-import carlito.Sprites.Mario;
 import carlito.Tools.B2WorldCreator;
 import carlito.Tools.Controller;
 import carlito.Tools.MyCallbackListener;
@@ -31,13 +31,11 @@ import carlito.Tools.WorldContactListener;
 import carlito.Sprites.Enemy.Enemy;
 import java.util.concurrent.LinkedBlockingQueue;
 import carlito.Sprites.Enemy.objects;
-import carlito.Sprites.Enemy.BOX;
-
 
 
 public class PlayScreen implements Screen{
     //Reference to our Game, used to set Screens
-    private MarioBros game;
+    private CarlitoEscape game;
     private TextureAtlas atlas;
     private TextureAtlas atlasKey;
     public static boolean alreadyDestroyed = false;
@@ -58,7 +56,7 @@ public class PlayScreen implements Screen{
     private B2WorldCreator creator;
 
     //sprites
-    private Mario player;
+    private Carlito player;
     private Key key;
 
     private Music music;
@@ -72,7 +70,7 @@ public class PlayScreen implements Screen{
     boolean temp;
 
     String skin;
-    public PlayScreen(MarioBros game, String skin){
+    public PlayScreen(CarlitoEscape game, String skin){
         atlas = new TextureAtlas("KarlitoGFX.atlas");
         atlasKey = new TextureAtlas("items.pack");
         this.game = game;
@@ -80,7 +78,7 @@ public class PlayScreen implements Screen{
         gamecam = new OrthographicCamera();
 
         //create a FitViewport to maintain virtual aspect ratio despite screen size
-        gamePort = new FitViewport(MarioBros.V_WIDTH / MarioBros.PPM, MarioBros.V_HEIGHT / MarioBros.PPM, gamecam);
+        gamePort = new FitViewport(CarlitoEscape.V_WIDTH / CarlitoEscape.PPM, CarlitoEscape.V_HEIGHT / CarlitoEscape.PPM, gamecam);
 
         //create our game HUD for scores/timers/level info
 
@@ -88,7 +86,7 @@ public class PlayScreen implements Screen{
         //Load our map and setup our map renderer
         maploader = new TmxMapLoader();
         map = maploader.load("level1.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map,1  / MarioBros.PPM);
+        renderer = new OrthogonalTiledMapRenderer(map,1  / CarlitoEscape.PPM);
 
         //initially set our gamcam to be centered correctly at the start of of map
         gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() /2, 0);
@@ -101,18 +99,18 @@ public class PlayScreen implements Screen{
         creator = new B2WorldCreator(this);
 
         //create mario in our game world
-        player = new Mario(this, skin);
+        player = new Carlito(this, skin);
 
         hud = new Hud(game.batch, player);
 
         world.setContactListener(new WorldContactListener());
 
-        intro=MarioBros.manager.get("audio/music/intro.ogg", Music.class);
+        intro= CarlitoEscape.manager.get("audio/music/intro.ogg", Music.class);
         intro.setLooping(false);
         intro.setVolume(0.4f);
         intro.play();
 
-        music = MarioBros.manager.get("audio/music/997.ogg", Music.class);
+        music = CarlitoEscape.manager.get("audio/music/997.ogg", Music.class);
         music.setLooping(true);
         music.setVolume(0.4f);
 
@@ -138,10 +136,10 @@ public class PlayScreen implements Screen{
         if(!itemsToSpawn.isEmpty()){
             ItemDef idef=itemsToSpawn.poll();
             if(idef.type==Key.class){
-                items.add(new Key(this, 250/ MarioBros.PPM, 150 / MarioBros.PPM));
+                items.add(new Key(this, 250/ CarlitoEscape.PPM, 150 / CarlitoEscape.PPM));
             }
             /*if(idef.type==BOX.class){
-                items.add(new BOX(this, 230/ MarioBros.PPM, 100 / MarioBros.PPM));
+                items.add(new BOX(this, 230/ CarlitoEscape.PPM, 100 / CarlitoEscape.PPM));
             }*/
         }
     }
@@ -160,7 +158,7 @@ public class PlayScreen implements Screen{
 
     public void handleInput(float dt){
         //control our player using immediate impulses
-        if(player.currentState != Mario.State.DEAD) {
+        if(player.currentState != Carlito.State.DEAD) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
                 player.jump();
             if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2){
@@ -194,7 +192,7 @@ public class PlayScreen implements Screen{
 
         for(Enemy enemy : creator.getEnemies()) {
             enemy.update(dt);
-            if(enemy.getX() < player.getX() + 224 / MarioBros.PPM) {
+            if(enemy.getX() < player.getX() + 224 / CarlitoEscape.PPM) {
                 enemy.b2body.setActive(true);
             }
         }
@@ -208,7 +206,7 @@ public class PlayScreen implements Screen{
         hud.update(dt);
 
         //attach our gamecam to our players.x coordinate
-        if(player.currentState != Mario.State.DEAD) {
+        if(player.currentState != Carlito.State.DEAD) {
             gamecam.position.x = player.b2body.getPosition().x;
         }
 
@@ -219,7 +217,7 @@ public class PlayScreen implements Screen{
 
         MyCallbackListener.sendWsp =player.b2body.getPosition().x;
         //zaczyna grac jesli intro przestanie, ustawia flage zeby nie zaczynac w kolko
-        if(!intro.isPlaying() && !temp && player.currentState != Mario.State.DEAD){
+        if(!intro.isPlaying() && !temp && player.currentState != Carlito.State.DEAD){
             music.play();
             temp=true;
         }
@@ -270,7 +268,7 @@ public class PlayScreen implements Screen{
 
     public boolean gameOver(){
         //jesli zginal albo skonczyl mu sie czas
-        if(player.currentState == Mario.State.DEAD && player.getStateTimer() > 3 ){
+        if(player.currentState == Carlito.State.DEAD && player.getStateTimer() > 3 ){
             MyCallbackListener.sendWsp=37;
             MyCallbackListener.result=2;
             return true;
@@ -284,17 +282,17 @@ public class PlayScreen implements Screen{
         else if(player.isFree){
             MyCallbackListener.sendWsp=36;
             MyCallbackListener.result=1;
-            MarioBros.manager.get("audio/music/intro.ogg", Music.class).stop();
-            MarioBros.manager.get("audio/music/997.ogg", Music.class).stop();
-            MarioBros.manager.get("audio/sounds/mariowin.wav", Sound.class).play();
+            CarlitoEscape.manager.get("audio/music/intro.ogg", Music.class).stop();
+            CarlitoEscape.manager.get("audio/music/997.ogg", Music.class).stop();
+            CarlitoEscape.manager.get("audio/sounds/mariowin.wav", Sound.class).play();
             return true;
         }
         //jesli tamten dal znac ze przegral
         else if(MyCallbackListener.receiveWsp==37){
             MyCallbackListener.result=1;
-            MarioBros.manager.get("audio/music/intro.ogg", Music.class).stop();
-            MarioBros.manager.get("audio/music/997.ogg", Music.class).stop();
-            MarioBros.manager.get("audio/sounds/mariowin.wav", Sound.class).play();
+            CarlitoEscape.manager.get("audio/music/intro.ogg", Music.class).stop();
+            CarlitoEscape.manager.get("audio/music/997.ogg", Music.class).stop();
+            CarlitoEscape.manager.get("audio/sounds/mariowin.wav", Sound.class).play();
             return true;
         }
         return false;

@@ -10,8 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import carlito.MarioBros;
-import carlito.Screens.PlayScreen;
+import carlito.CarlitoEscape;
 
 /**
  * Created by romek95a on 28.05.2018.
@@ -26,7 +25,7 @@ public class Controller {
     public Controller(){
         cam=new OrthographicCamera();
         viewport=new FitViewport(800,400,cam);
-        stage = new Stage(viewport, MarioBros.batch);
+        stage = new Stage(viewport, CarlitoEscape.batch);
         Gdx.input.setInputProcessor(stage);
 
         Table table=new Table();

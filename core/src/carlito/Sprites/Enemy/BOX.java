@@ -1,18 +1,13 @@
 package carlito.Sprites.Enemy;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.utils.Array;
-import carlito.MarioBros;
+
+import carlito.CarlitoEscape;
 import carlito.Screens.PlayScreen;
-import carlito.Sprites.Mario;
 
 /**
  * Created by jaro a roman dziwkarz on 19.06.2018.
@@ -27,7 +22,7 @@ public class BOX extends objects {
 
         stand=new TextureRegion(screen.getAtlasKey().findRegion("sk1"), 0,0,32, 32);
 
-        setBounds(0, 0, 32 / MarioBros.PPM, 32 / MarioBros.PPM);
+        setBounds(0, 0, 32 / CarlitoEscape.PPM, 32 / CarlitoEscape.PPM);
 
     }
 
@@ -46,13 +41,13 @@ public class BOX extends objects {
 
         FixtureDef fdef=new FixtureDef();
         PolygonShape shape=new PolygonShape();
-        shape.setAsBox(16/MarioBros.PPM,16/MarioBros.PPM);
-        fdef.filter.categoryBits=MarioBros.BRICK_BIT;
-        fdef.filter.maskBits=MarioBros.MARIO_BIT |
-                MarioBros.OBJECT_BIT |
-                MarioBros.GROUND_BIT |
-                MarioBros.COIN_BIT |
-                MarioBros.BRICK_BIT;
+        shape.setAsBox(16/ CarlitoEscape.PPM,16/ CarlitoEscape.PPM);
+        fdef.filter.categoryBits= CarlitoEscape.BRICK_BIT;
+        fdef.filter.maskBits= CarlitoEscape.MARIO_BIT |
+                CarlitoEscape.OBJECT_BIT |
+                CarlitoEscape.GROUND_BIT |
+                CarlitoEscape.COIN_BIT |
+                CarlitoEscape.BRICK_BIT;
 
         fdef.shape=shape;
         b2body.createFixture(fdef).setUserData(this);

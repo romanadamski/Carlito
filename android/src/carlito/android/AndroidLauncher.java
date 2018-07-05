@@ -2,18 +2,14 @@ package carlito.android;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import carlito.MarioBros;
-import carlito.Menu.ClientBluetooth;
-import carlito.Menu.ServerBluetooth;
+
+import carlito.CarlitoEscape;
 import carlito.Tools.MyCallbackListener;
 
 public class AndroidLauncher extends AndroidApplication {
@@ -27,8 +23,8 @@ public class AndroidLauncher extends AndroidApplication {
 			skin = extras.getString("skin");
 		}
 
-		MarioBros marioBros=new MarioBros(skin);
-		initialize(marioBros, config);
+		CarlitoEscape carlitoEscape =new CarlitoEscape(skin);
+		initialize(carlitoEscape, config);
 		if(MyCallbackListener.sinlgePlay>-1){
 
 		}

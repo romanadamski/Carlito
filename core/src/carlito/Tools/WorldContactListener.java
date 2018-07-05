@@ -1,15 +1,14 @@
 package carlito.Tools;
 
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import carlito.MarioBros;
+
+import carlito.CarlitoEscape;
 import carlito.Sprites.Items.Item;
-import carlito.Sprites.Mario;
+import carlito.Sprites.Carlito;
 import carlito.Sprites.TileObjects.InteractiveTileObject;
 import carlito.Sprites.Enemy.Enemy;
 
@@ -25,42 +24,42 @@ public class WorldContactListener implements ContactListener {
         int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
         switch (cDef){
-            case MarioBros.MARIO_HEAD_BIT | MarioBros.BRICK_BIT:
-            case MarioBros.MARIO_HEAD_BIT | MarioBros.COIN_BIT:
-                if(fixA.getFilterData().categoryBits == MarioBros.MARIO_HEAD_BIT)
-                    ((InteractiveTileObject) fixB.getUserData()).onHeadHit((Mario) fixA.getUserData());
+            case CarlitoEscape.MARIO_HEAD_BIT | CarlitoEscape.BRICK_BIT:
+            case CarlitoEscape.MARIO_HEAD_BIT | CarlitoEscape.COIN_BIT:
+                if(fixA.getFilterData().categoryBits == CarlitoEscape.MARIO_HEAD_BIT)
+                    ((InteractiveTileObject) fixB.getUserData()).onHeadHit((Carlito) fixA.getUserData());
                 else
-                    ((InteractiveTileObject) fixA.getUserData()).onHeadHit((Mario) fixB.getUserData());
+                    ((InteractiveTileObject) fixA.getUserData()).onHeadHit((Carlito) fixB.getUserData());
                 break;
-            case MarioBros.ENEMY_HEAD_BIT | MarioBros.MARIO_BIT:
-                if(fixA.getFilterData().categoryBits == MarioBros.ENEMY_HEAD_BIT)
-                    ((Enemy)fixA.getUserData()).hitOnHead((Mario) fixB.getUserData());
+            case CarlitoEscape.ENEMY_HEAD_BIT | CarlitoEscape.MARIO_BIT:
+                if(fixA.getFilterData().categoryBits == CarlitoEscape.ENEMY_HEAD_BIT)
+                    ((Enemy)fixA.getUserData()).hitOnHead((Carlito) fixB.getUserData());
                 else
-                    ((Enemy)fixB.getUserData()).hitOnHead((Mario) fixA.getUserData());
+                    ((Enemy)fixB.getUserData()).hitOnHead((Carlito) fixA.getUserData());
                 break;
-            case MarioBros.ENEMY_BIT | MarioBros.OBJECT_BIT:
-                if(fixA.getFilterData().categoryBits == MarioBros.ENEMY_BIT)
+            case CarlitoEscape.ENEMY_BIT | CarlitoEscape.OBJECT_BIT:
+                if(fixA.getFilterData().categoryBits == CarlitoEscape.ENEMY_BIT)
                     ((Enemy)fixA.getUserData()).reverseVelocity(true, false);
                 else
                     ((Enemy)fixB.getUserData()).reverseVelocity(true, false);
                 break;
-            case MarioBros.MARIO_BIT | MarioBros.ENEMY_BIT:
-                if(fixA.getFilterData().categoryBits == MarioBros.MARIO_BIT)
-                    ((Mario) fixA.getUserData()).hit((Enemy)fixB.getUserData());
+            case CarlitoEscape.MARIO_BIT | CarlitoEscape.ENEMY_BIT:
+                if(fixA.getFilterData().categoryBits == CarlitoEscape.MARIO_BIT)
+                    ((Carlito) fixA.getUserData()).hit((Enemy)fixB.getUserData());
                 else
-                    ((Mario) fixB.getUserData()).hit((Enemy)fixA.getUserData());
+                    ((Carlito) fixB.getUserData()).hit((Enemy)fixA.getUserData());
                 break;
-            case MarioBros.ITEM_BIT | MarioBros.OBJECT_BIT:
-                if(fixA.getFilterData().categoryBits == MarioBros.ITEM_BIT)
+            case CarlitoEscape.ITEM_BIT | CarlitoEscape.OBJECT_BIT:
+                if(fixA.getFilterData().categoryBits == CarlitoEscape.ITEM_BIT)
                     ((Item)fixA.getUserData()).reverseVelocity(true, false);
                 else
                     ((Item)fixB.getUserData()).reverseVelocity(true, false);
                 break;
-            case MarioBros.ITEM_BIT | MarioBros.MARIO_BIT:
-                if(fixA.getFilterData().categoryBits == MarioBros.ITEM_BIT)
-                    ((Item)fixA.getUserData()).use((Mario) fixB.getUserData());
+            case CarlitoEscape.ITEM_BIT | CarlitoEscape.MARIO_BIT:
+                if(fixA.getFilterData().categoryBits == CarlitoEscape.ITEM_BIT)
+                    ((Item)fixA.getUserData()).use((Carlito) fixB.getUserData());
                 else
-                    ((Item)fixB.getUserData()).use((Mario) fixA.getUserData());
+                    ((Item)fixB.getUserData()).use((Carlito) fixA.getUserData());
                 break;
         }
     }
