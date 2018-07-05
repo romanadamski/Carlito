@@ -123,8 +123,7 @@ public class Carlito extends Sprite {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         //update sprite with the correct frame depending on marios current action
         setRegion(getFrame(dt));
-        if (marioIsDead)
-            setPosition(225/ CarlitoEscape.PPM, 36 / CarlitoEscape.PPM);
+
 
 
 
@@ -205,8 +204,8 @@ public class Carlito extends Sprite {
             for (Fixture fixture : b2body.getFixtureList()) {
                 fixture.setFilterData(filter);
             }
-            if(this.b2body.getLinearVelocity().y<0)
-                b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
+
+            b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
 
 
         }
