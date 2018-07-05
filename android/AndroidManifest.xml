@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:theme="@style/GdxTheme" >
         <activity
-            android:name="com.brentaureli.mariobros.Menu.MainActivity"
+            android:name="carlito.Menu.MainActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,13 +23,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.brentaureli.mariobros.android.AndroidLauncher"
+            android:name="carlito.android.AndroidLauncher"
             android:label="@string/app_name" 
             android:screenOrientation="landscape"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
         </activity>
         <activity
-            android:name="com.brentaureli.mariobros.Menu.ListaUrzadzen"
+            android:name="carlito.Menu.ListaUrzadzen"
             android:screenOrientation="landscape">
         </activity>
     </application>
