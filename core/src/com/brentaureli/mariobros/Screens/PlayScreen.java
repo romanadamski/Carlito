@@ -273,7 +273,6 @@ public class PlayScreen implements Screen{
         if(player.currentState == Mario.State.DEAD && player.getStateTimer() > 3 ){
             MyCallbackListener.sendWsp=37;
             MyCallbackListener.result=2;
-            System.out.println("dupaa");
             return true;
         }
         //jesli tamten wygral

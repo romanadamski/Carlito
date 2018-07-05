@@ -34,7 +34,7 @@ public class bagietson extends Enemy {
         frames = new Array<TextureRegion>();
 
         for(int i = 0; i < 3; i++)
-            frames.add(new TextureRegion(screen.getAtlas().findRegion("Bagieta" ), i * 16, 50, 16, 36));
+            frames.add(new TextureRegion(screen.getAtlas().findRegion("Bagieta" ), i * 16, 10, 16, 36));
 
         walkAnimation = new Animation(0.2f, frames);
 
